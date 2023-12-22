@@ -9,7 +9,7 @@ export async function getMessages() {
 
     const { data: messages, error } = await supabase
         .from("messages")
-        .select("*")
+        .select("id, created_at, text, user: users (id, email)")
         .order("created_at", { ascending: true });
 
     return messages;

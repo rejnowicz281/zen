@@ -32,7 +32,10 @@ export default function Messages({ messages }) {
         <>
             <ul>
                 {messages.map((message) => (
-                    <li key={message.id}>{message.text}</li>
+                    <li key={message.id}>
+                        <b>{message.user.email}: </b>
+                        <p>{message.text}</p>
+                    </li>
                 ))}
             </ul>
             <form action={handleAction} ref={formRef}>
