@@ -1,7 +1,8 @@
-import { signOut } from "@/actions/auth";
+import { AuthProvider } from "@/providers/AuthProvider";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import Link from "next/link";
+import Dashboard from "./components/Dashboard";
+import Login from "./components/Login";
 
 export default async function Home() {
     const cookieStore = cookies();
@@ -12,16 +13,10 @@ export default async function Home() {
     } = await supabase.auth.getUser();
 
     return user ? (
-        <div>
-            Hey, {user.email}!
-            <form action={signOut}>
-                <button>Logout</button>
-            </form>
-        </div>
+        <AuthProvider user={user}>
+            <Dashboard />
+        </AuthProvider>
     ) : (
-        <div>
-            <h1>zen</h1>
-            <Link href="/login">Login</Link>
-        </div>
+        <Login />
     );
 }
