@@ -3,14 +3,15 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
-export async function getMessages() {
+export async function getPublicMessages() {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
 
     const { data: messages, error } = await supabase
         .from("messages")
         .select("id, created_at, text, user: users (id, email)")
-        .order("created_at", { ascending: true });
+        .order("created_at", { ascending: true })
+        .is("room_id", null);
 
     return messages;
 }

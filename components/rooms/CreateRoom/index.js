@@ -1,7 +1,7 @@
 "use client";
 
 import { createRoom } from "@/actions/rooms";
-import SubmitButton from "@/components/SubmitButton";
+import SubmitButton from "@/components/general/SubmitButton";
 import { useRef } from "react";
 
 export default function CreateRoom() {

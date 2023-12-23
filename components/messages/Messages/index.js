@@ -1,7 +1,7 @@
 "use client";
 
 import { createMessage } from "@/actions/messages";
-import SubmitButton from "@/components/SubmitButton";
+import SubmitButton from "@/components/general/SubmitButton";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
@@ -13,9 +13,14 @@ export default function Messages({ messages, roomId }) {
 
     useEffect(() => {
         const channel = supabase
-            .channel(roomId)
-            .on("postgres_changes", { schema: "public", event: "*", table: "messages" }, () => router.refresh())
+            .channel(roomId || "public")
+            .on("postgres_changes", { schema: "public", event: "*", table: "messages" }, (payload) => {
+                console.log("Message received", payload.new);
+                router.refresh();
+            })
             .subscribe();
+
+        console.log("Connected to channel", channel.topic);
 
         return () => supabase.removeChannel(channel);
     }, [supabase, router, roomId]);
@@ -39,7 +44,7 @@ export default function Messages({ messages, roomId }) {
                 ))}
             </ul>
             <form action={handleAction} ref={formRef}>
-                <input type="hidden" name="room_id" value={roomId} />
+                {roomId && <input type="hidden" name="room_id" value={roomId} />}
                 <input type="text" name="text" />
                 <SubmitButton content="Send" loading="Sending..." />
             </form>

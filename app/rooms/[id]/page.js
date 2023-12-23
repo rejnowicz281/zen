@@ -1,6 +1,6 @@
 import { getRoom } from "@/actions/rooms";
+import Messages from "@/components/messages/Messages";
 import Link from "next/link";
-import Messages from "./components/Messages";
 
 export default async function RoomPage({ params: { id } }) {
     const room = await getRoom(id);

@@ -1,8 +1,8 @@
+import Dashboard from "@/components/general/Dashboard";
+import LandingPage from "@/components/general/LandingPage";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import Dashboard from "./components/Dashboard";
-import Login from "./components/Login";
 
 export default async function Home() {
     const cookieStore = cookies();
@@ -17,6 +17,6 @@ export default async function Home() {
             <Dashboard />
         </AuthProvider>
     ) : (
-        <Login />
+        <LandingPage />
     );
 }

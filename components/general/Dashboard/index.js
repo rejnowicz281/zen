@@ -1,8 +1,8 @@
 import { signOut } from "@/actions/auth";
 import { getRooms } from "@/actions/rooms";
+import CreateRoom from "@/components/rooms/CreateRoom";
 import Link from "next/link";
-import CreateRoom from "./components/CreateRoom";
-import Greetings from "./components/Greetings";
+import Greetings from "../Greetings";
 
 export default async function Dashboard() {
     const rooms = await getRooms();
@@ -15,6 +15,9 @@ export default async function Dashboard() {
             </form>
             <CreateRoom />
             <ul>
+                <li>
+                    <Link href="/rooms/public">Public</Link>
+                </li>
                 {rooms.map((room) => (
                     <li key={room.id}>
                         <Link href={`/rooms/${room.id}`}>{room.name}</Link>
