@@ -15,9 +15,6 @@ export default async function Dashboard() {
             </form>
             <CreateRoom />
             <ul>
-                <li>
-                    <Link href="/rooms/public">Public</Link>
-                </li>
                 {rooms.map((room) => (
                     <li key={room.id}>
                         <Link href={`/rooms/${room.id}`}>{room.name}</Link>

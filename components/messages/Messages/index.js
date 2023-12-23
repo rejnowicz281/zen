@@ -14,10 +14,19 @@ export default function Messages({ messages, roomId }) {
     useEffect(() => {
         const channel = supabase
             .channel(roomId || "public")
-            .on("postgres_changes", { schema: "public", event: "*", table: "messages" }, (payload) => {
-                console.log("Message received", payload.new);
-                router.refresh();
-            })
+            .on(
+                "postgres_changes",
+                {
+                    schema: "public",
+                    event: "*",
+                    table: "messages",
+                    filter: `room_id=eq.${roomId}`,
+                },
+                (payload) => {
+                    console.log("Message received", payload.new);
+                    router.refresh();
+                }
+            )
             .subscribe();
 
         console.log("Connected to channel", channel.topic);
@@ -44,7 +53,7 @@ export default function Messages({ messages, roomId }) {
                 ))}
             </ul>
             <form action={handleAction} ref={formRef}>
-                {roomId && <input type="hidden" name="room_id" value={roomId} />}
+                <input type="hidden" name="room_id" value={roomId} />
                 <input type="text" name="text" />
                 <SubmitButton content="Send" loading="Sending..." />
             </form>
