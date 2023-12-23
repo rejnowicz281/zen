@@ -6,19 +6,19 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
-export default function Messages({ messages }) {
+export default function Messages({ messages, roomId }) {
     const router = useRouter();
     const supabase = createClientComponentClient();
     const formRef = useRef(null);
 
     useEffect(() => {
         const channel = supabase
-            .channel("messages")
+            .channel(roomId)
             .on("postgres_changes", { schema: "public", event: "*", table: "messages" }, () => router.refresh())
             .subscribe();
 
         return () => supabase.removeChannel(channel);
-    }, [supabase, router]);
+    }, [supabase, router, roomId]);
 
     async function handleAction(formData) {
         if (!formData.get("text")) return;
@@ -39,6 +39,7 @@ export default function Messages({ messages }) {
                 ))}
             </ul>
             <form action={handleAction} ref={formRef}>
+                <input type="hidden" name="room_id" value={roomId} />
                 <input type="text" name="text" />
                 <SubmitButton content="Send" loading="Sending..." />
             </form>

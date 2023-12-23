@@ -24,8 +24,9 @@ export async function createMessage(formData) {
     } = await supabase.auth.getUser();
 
     const text = formData.get("text");
+    const room_id = formData.get("room_id") || null;
 
-    const { data: message, error } = await supabase.from("messages").insert([{ text, user_id: user.id }]);
+    const { data: message, error } = await supabase.from("messages").insert([{ text, user_id: user.id, room_id }]);
 
     if (error) {
         const data = {
@@ -40,7 +41,7 @@ export async function createMessage(formData) {
     const data = {
         action: "createMessage",
         success: true,
-        text: text,
+        text,
     };
     console.log(data);
     return data;

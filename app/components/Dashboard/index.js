@@ -1,10 +1,11 @@
 import { signOut } from "@/actions/auth";
-import { getMessages } from "@/actions/messages";
+import { getRooms } from "@/actions/rooms";
+import Link from "next/link";
+import CreateRoom from "./components/CreateRoom";
 import Greetings from "./components/Greetings";
-import Messages from "./components/Messages";
 
 export default async function Dashboard() {
-    const messages = await getMessages();
+    const rooms = await getRooms();
 
     return (
         <div>
@@ -12,7 +13,14 @@ export default async function Dashboard() {
             <form action={signOut}>
                 <button>Logout</button>
             </form>
-            <Messages messages={messages} />
+            <CreateRoom />
+            <ul>
+                {rooms.map((room) => (
+                    <li key={room.id}>
+                        <Link href={`/rooms/${room.id}`}>{room.name}</Link>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }
