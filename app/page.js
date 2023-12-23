@@ -1,22 +1,26 @@
-import Dashboard from "@/components/general/Dashboard";
-import LandingPage from "@/components/general/LandingPage";
-import { AuthProvider } from "@/providers/AuthProvider";
-import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
+import { signOut } from "@/actions/auth";
+import { getRooms } from "@/actions/rooms";
+import Greetings from "@/components/general/Greetings";
+import CreateRoom from "@/components/rooms/CreateRoom";
+import Link from "next/link";
 
 export default async function Home() {
-    const cookieStore = cookies();
-    const supabase = createClient(cookieStore);
+    const rooms = await getRooms();
 
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
-
-    return user ? (
-        <AuthProvider user={user}>
-            <Dashboard />
-        </AuthProvider>
-    ) : (
-        <LandingPage />
+    return (
+        <div>
+            <Greetings />
+            <form action={signOut}>
+                <button>Logout</button>
+            </form>
+            <CreateRoom />
+            <ul>
+                {rooms.map((room) => (
+                    <li key={room.id}>
+                        <Link href={`/rooms/${room.id}`}>{room.name}</Link>
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
 }
