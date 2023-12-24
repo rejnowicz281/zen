@@ -18,6 +18,8 @@ export default function CreateRoom() {
     return (
         <form action={handleAction} ref={formRef}>
             <input type="text" name="name" />
+            <input type="checkbox" name="public" defaultChecked />
+            <label htmlFor="public">Public</label>
             <SubmitButton content="Create Room" loading="Creating..." />
         </form>
     );

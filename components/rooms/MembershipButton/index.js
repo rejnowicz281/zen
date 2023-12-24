@@ -3,16 +3,26 @@
 import { createRoomMembership, deleteRoomMembership } from "@/actions/rooms";
 import useAuthContext from "@/providers/AuthProvider";
 
-export default function MembershipButton({ isMember, roomId }) {
+export default function MembershipButton({ isMember, roomId, isPublic, isAccepted }) {
     const { user } = useAuthContext();
 
     return (
         <button
             onClick={
-                isMember ? () => deleteRoomMembership(roomId, user.id) : () => createRoomMembership(roomId, user.id)
+                isMember
+                    ? () => deleteRoomMembership(roomId, user.id)
+                    : () => createRoomMembership(roomId, user.id, isPublic)
             }
         >
-            {isMember ? "Leave" : "Join"}
+            {isPublic
+                ? isAccepted
+                    ? "Leave"
+                    : "Join"
+                : isMember && isAccepted
+                ? "Leave"
+                : isMember && !isAccepted
+                ? "Cancel Join Request"
+                : "Join"}
         </button>
     );
 }

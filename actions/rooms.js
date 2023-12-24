@@ -25,20 +25,24 @@ export async function getRoom(id) {
     } = await supabase.auth.getUser();
 
     const [roomData, messagesData, membersData] = await Promise.all([
-        supabase.from("rooms").select("id, name, admin: users(id, email)").eq("id", id).single(),
+        supabase.from("rooms").select("id, name, public, admin: users(id, email)").eq("id", id).single(),
         supabase
             .from("messages")
             .select("id, created_at, text, user: users (id, email)")
             .eq("room_id", id)
             .order("created_at", { ascending: true }),
-        supabase.from("room_memberships").select("user: users (id, email)").eq("room_id", id),
+        supabase.from("room_memberships").select("accepted, user: users (id, email)").eq("room_id", id),
     ]);
+
+    const member = membersData.data.find((member) => member.user.id === user.id);
 
     const room = {
         ...roomData.data,
         messages: messagesData.data,
-        members: membersData.data.map((member) => member.user),
-        isMember: membersData.data.some((member) => member.user.id === user.id),
+        members: membersData.data.map((member) => ({ accepted: member.accepted, ...member.user })),
+        acceptedMembers: membersData.data.filter((member) => member.accepted).map((member) => member.user),
+        isMember: !!member,
+        isAccepted: member?.accepted || false,
         isAdmin: roomData.data.admin?.id === user.id,
     };
 
@@ -54,8 +58,9 @@ export async function createRoom(formData) {
     } = await supabase.auth.getUser();
 
     const name = formData.get("name");
+    const is_public = formData.get("public") === "on";
 
-    const { data: room, error } = await supabase.from("rooms").insert([{ name, admin_id: user.id }]);
+    const { data: room, error } = await supabase.from("rooms").insert([{ name, admin_id: user.id, public: is_public }]);
 
     if (error) {
         const data = {
@@ -78,7 +83,7 @@ export async function createRoom(formData) {
     return data;
 }
 
-export async function createRoomMembership(room_id, user_id) {
+export async function createRoomMembership(room_id, user_id, room_is_public) {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
 
@@ -86,7 +91,9 @@ export async function createRoomMembership(room_id, user_id) {
         data: { user },
     } = await supabase.auth.getUser();
 
-    const { data: membership, error } = await supabase.from("room_memberships").insert([{ user_id, room_id }]);
+    const { data: membership, error } = await supabase
+        .from("room_memberships")
+        .insert([{ user_id, room_id, accepted: room_is_public }]);
 
     if (error) {
         const data = {
@@ -105,6 +112,39 @@ export async function createRoomMembership(room_id, user_id) {
         success: true,
         room_id,
         user_id,
+    };
+    console.log(data);
+    return data;
+}
+
+export async function updateRoomMembership(room_id, user_id, accepted) {
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+
+    const { data: membership, error } = await supabase
+        .from("room_memberships")
+        .update({ accepted })
+        .eq("user_id", user_id)
+        .eq("room_id", room_id);
+
+    if (error) {
+        const data = {
+            action: "updateRoomMembership",
+            success: false,
+            error,
+        };
+        console.error(data);
+        return data;
+    }
+
+    revalidatePath("/");
+
+    const data = {
+        action: "updateRoomMembership",
+        success: true,
+        room_id,
+        user_id,
+        accepted,
     };
     console.log(data);
     return data;
