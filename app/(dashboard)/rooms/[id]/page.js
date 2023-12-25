@@ -15,7 +15,11 @@ export default async function RoomPage({ params: { id } }) {
         <div>
             <Link href="/">Back</Link>
             <h1>{room.name}</h1>
-            {room.admin && <p>admin: {room.admin.email}</p>}
+            {room.admin && (
+                <p>
+                    admin: <Link href={`/users/${room.admin.id}`}> {room.admin.email} </Link>
+                </p>
+            )}
             {!room.public && <p>This is a private room.</p>}
             {room.isAdmin && (
                 <JoinRequests requests={room.members.filter((member) => !member.accepted)} roomId={room.id} />
