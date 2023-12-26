@@ -1,6 +1,7 @@
 "use client";
 
 import { deleteRoomMembership, updateRoomMembership } from "@/actions/rooms";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function JoinRequests({ requests, roomId }) {
@@ -9,7 +10,10 @@ export default function JoinRequests({ requests, roomId }) {
             {requests.map((requester) => (
                 <div key={requester.id}>
                     <div>
-                        <Link href={`/users/${requester.id}`}>{requester.display_name}</Link>
+                        <Link href={`/users/${requester.id}`}>
+                            <Image src={requester.avatar_url} width={32} height={32} />
+                            {requester.display_name}
+                        </Link>
                     </div>
                     <button onClick={() => updateRoomMembership(roomId, requester.id, true)}>Accept</button>
                     <button onClick={() => deleteRoomMembership(roomId, requester.id)}>Decline</button>

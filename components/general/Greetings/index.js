@@ -1,6 +1,7 @@
 "use client";
 
 import useAuthContext from "@/providers/AuthProvider";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Greetings() {
@@ -8,7 +9,12 @@ export default function Greetings() {
 
     return (
         <>
-            Hey, <Link href={`/users/${user.id}`}>{user.display_name}</Link>!
+            Hey,
+            <Link href={`/users/${user.id}`}>
+                <Image src={user.avatar_url} width={32} height={32} />
+                {user.display_name}
+            </Link>
+            !
         </>
     );
 }

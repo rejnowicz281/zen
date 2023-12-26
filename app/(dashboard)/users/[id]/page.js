@@ -1,4 +1,5 @@
 import { getUserInfo } from "@/actions/users";
+import Image from "next/image";
 import Link from "next/link";
 
 export default async function UserPage({ params: { id } }) {
@@ -7,7 +8,10 @@ export default async function UserPage({ params: { id } }) {
     return (
         <div>
             <Link href="/">Back</Link>
-            <h1>{userInfo.display_name}</h1>
+            <h1>
+                <Image src={userInfo.avatar_url} width={32} height={32} />
+                {userInfo.display_name}
+            </h1>
             <h2>Admin rooms</h2>
             <ul>
                 {userInfo.adminRooms.map((room) => (

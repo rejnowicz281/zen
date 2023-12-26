@@ -8,7 +8,7 @@ export async function getUserInfo(id) {
     const supabase = createClient(cookieStore);
 
     const [userData, userRoomsData, adminRoomsData] = await Promise.all([
-        supabase.from("users").select("id,  email, display_name").eq("id", id).single(),
+        supabase.from("users").select("id, email, display_name, avatar_url").eq("id", id).single(),
         supabase
             .from("rooms")
             .select("id, name")

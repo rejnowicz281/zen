@@ -6,6 +6,7 @@ import MembersList from "@/components/rooms/MembersList";
 import MembershipButton from "@/components/rooms/MembershipButton";
 import UpdateRoom from "@/components/rooms/UpdateRoom";
 import RealTimeRoomProvider from "@/providers/RealTimeRoomProvider";
+import Image from "next/image";
 import Link from "next/link";
 
 export default async function RoomPage({ params: { id } }) {
@@ -21,7 +22,11 @@ export default async function RoomPage({ params: { id } }) {
                 {room.isAdmin && <UpdateRoom name={room.name} isPublic={room.public} id={id} />}
                 {room.admin && (
                     <p>
-                        admin: <Link href={`/users/${room.admin.id}`}> {room.admin.display_name} </Link>
+                        admin:
+                        <Link href={`/users/${room.admin.id}`}>
+                            <Image src={room.admin.avatar_url} width={32} height={32} />
+                            {room.admin.display_name}
+                        </Link>
                     </p>
                 )}
                 {!room.public && <p>This is a private room.</p>}

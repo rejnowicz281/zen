@@ -10,6 +10,7 @@ export function AuthProvider({ children, user }) {
             value={{
                 user: {
                     ...user,
+                    avatar_url: user.user_metadata.avatar_url,
                     display_name:
                         user.user_metadata.preferred_username ||
                         user.user_metadata.user_name ||
