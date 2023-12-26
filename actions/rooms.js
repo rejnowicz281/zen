@@ -83,6 +83,62 @@ export async function createRoom(formData) {
     return data;
 }
 
+export async function updateRoom(id, name, is_public) {
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+
+    const updateData = { name, public: is_public };
+
+    const { data: room, error } = await supabase.from("rooms").update(updateData).eq("id", id);
+
+    if (error) {
+        const data = {
+            action: "updateRoom",
+            success: false,
+            error,
+        };
+        console.error(data);
+        return data;
+    }
+
+    revalidatePath(`/rooms/${id}`);
+
+    const data = {
+        action: "updateRoom",
+        success: true,
+        name,
+    };
+    console.log(data);
+    return data;
+}
+
+export async function deleteRoom(id) {
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+
+    const { data: room, error } = await supabase.from("rooms").delete().eq("id", id);
+
+    if (error) {
+        const data = {
+            action: "deleteRoom",
+            success: false,
+            error,
+        };
+        console.error(data);
+        return data;
+    }
+
+    revalidatePath("/");
+
+    const data = {
+        action: "deleteRoom",
+        success: true,
+        id,
+    };
+    console.log(data);
+    return data;
+}
+
 export async function createRoomMembership(room_id, user_id, room_is_public) {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
@@ -105,7 +161,7 @@ export async function createRoomMembership(room_id, user_id, room_is_public) {
         return data;
     }
 
-    revalidatePath("/");
+    revalidatePath(`/rooms/${room_id}`);
 
     const data = {
         action: "createRoomMembership",
@@ -170,7 +226,7 @@ export async function deleteRoomMembership(room_id, user_id) {
         return data;
     }
 
-    revalidatePath("/");
+    revalidatePath(`/rooms/${room_id}`);
 
     const data = {
         action: "deleteRoomMembership",

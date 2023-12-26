@@ -4,6 +4,7 @@ import Messages from "@/components/messages/Messages";
 import JoinRequests from "@/components/rooms/JoinRequests";
 import MembersList from "@/components/rooms/MembersList";
 import MembershipButton from "@/components/rooms/MembershipButton";
+import UpdateRoom from "@/components/rooms/UpdateRoom";
 import Link from "next/link";
 
 export default async function RoomPage({ params: { id } }) {
@@ -15,6 +16,7 @@ export default async function RoomPage({ params: { id } }) {
         <div>
             <Link href="/">Back</Link>
             <h1>{room.name}</h1>
+            {room.isAdmin && <UpdateRoom name={room.name} isPublic={room.public} id={id} />}
             {room.admin && (
                 <p>
                     admin: <Link href={`/users/${room.admin.id}`}> {room.admin.display_name} </Link>
