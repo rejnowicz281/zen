@@ -17,7 +17,7 @@ export default async function RoomPage({ params: { id } }) {
             <h1>{room.name}</h1>
             {room.admin && (
                 <p>
-                    admin: <Link href={`/users/${room.admin.id}`}> {room.admin.email} </Link>
+                    admin: <Link href={`/users/${room.admin.id}`}> {room.admin.display_name} </Link>
                 </p>
             )}
             {!room.public && <p>This is a private room.</p>}

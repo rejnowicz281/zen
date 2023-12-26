@@ -35,7 +35,7 @@ export default function Messages({ messages, roomId }) {
         <ul>
             {messages.map((message) => (
                 <li key={message.id}>
-                    <b>{message.user.email}: </b>
+                    <b>{message.user.display_name}: </b>
                     <p>{message.text}</p>
                 </li>
             ))}

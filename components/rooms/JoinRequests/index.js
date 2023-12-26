@@ -9,7 +9,7 @@ export default function JoinRequests({ requests, roomId }) {
             {requests.map((requester) => (
                 <div key={requester.id}>
                     <div>
-                        <Link href={`/users/${requester.id}`}>{requester.email}</Link>
+                        <Link href={`/users/${requester.id}`}>{requester.display_name}</Link>
                     </div>
                     <button onClick={() => updateRoomMembership(roomId, requester.id, true)}>Accept</button>
                     <button onClick={() => deleteRoomMembership(roomId, requester.id)}>Decline</button>

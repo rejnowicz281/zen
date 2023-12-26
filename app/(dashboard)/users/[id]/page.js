@@ -7,7 +7,7 @@ export default async function UserPage({ params: { id } }) {
     return (
         <div>
             <Link href="/">Back</Link>
-            <h1>{userInfo.username || userInfo.email}</h1>
+            <h1>{userInfo.display_name}</h1>
             <h2>Admin rooms</h2>
             <ul>
                 {userInfo.adminRooms.map((room) => (

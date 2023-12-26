@@ -8,7 +8,7 @@ export default function MembersList({ members, isAdmin, roomId }) {
         <ul>
             {members.map((member) => (
                 <li key={member.id}>
-                    <Link href={`/users/${member.id}`}>{member.email}</Link>
+                    <Link href={`/users/${member.id}`}>{member.display_name}</Link>
                     {isAdmin && <button onClick={() => deleteRoomMembership(roomId, member.id)}>Kick</button>}
                 </li>
             ))}

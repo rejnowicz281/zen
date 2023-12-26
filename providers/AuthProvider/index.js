@@ -8,7 +8,16 @@ export function AuthProvider({ children, user }) {
     return (
         <AuthContext.Provider
             value={{
-                user,
+                user: {
+                    ...user,
+                    display_name:
+                        user.user_metadata.preferred_username ||
+                        user.user_metadata.user_name ||
+                        user.user_metadata.username ||
+                        user.user_metadata.name ||
+                        user.user_metadata.full_name ||
+                        user.user_metadata.email,
+                },
             }}
         >
             {children}

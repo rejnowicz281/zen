@@ -8,7 +8,7 @@ export default function Greetings() {
 
     return (
         <>
-            Hey, <Link href={`/users/${user.id}`}>{user.email}</Link>!
+            Hey, <Link href={`/users/${user.id}`}>{user.display_name}</Link>!
         </>
     );
 }

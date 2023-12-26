@@ -25,13 +25,13 @@ export async function getRoom(id) {
     } = await supabase.auth.getUser();
 
     const [roomData, messagesData, membersData] = await Promise.all([
-        supabase.from("rooms").select("id, name, public, admin: users(id, email)").eq("id", id).single(),
+        supabase.from("rooms").select("id, name, public, admin: users(id, email, display_name)").eq("id", id).single(),
         supabase
             .from("messages")
-            .select("id, created_at, text, user: users (id, email)")
+            .select("id, created_at, text, user: users (id, email, display_name)")
             .eq("room_id", id)
             .order("created_at", { ascending: true }),
-        supabase.from("room_memberships").select("accepted, user: users (id, email)").eq("room_id", id),
+        supabase.from("room_memberships").select("accepted, user: users (id, email, display_name)").eq("room_id", id),
     ]);
 
     const member = membersData.data.find((member) => member.user.id === user.id);
