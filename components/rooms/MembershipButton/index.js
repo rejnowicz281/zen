@@ -14,15 +14,7 @@ export default function MembershipButton({ isMember, roomId, isPublic, isAccepte
                     : () => createRoomMembership(roomId, user.id, isPublic)
             }
         >
-            {isPublic
-                ? isAccepted
-                    ? "Leave"
-                    : "Join"
-                : isMember && isAccepted
-                ? "Leave"
-                : isMember && !isAccepted
-                ? "Cancel Join Request"
-                : "Join"}
+            {isMember ? (isAccepted ? "Leave" : "Cancel Join Request") : "Join"}
         </button>
     );
 }

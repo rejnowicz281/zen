@@ -2,38 +2,9 @@
 
 import { deleteMessage } from "@/actions/messages";
 import useAuthContext from "@/providers/AuthProvider";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-export default function Messages({ messages, roomId, isAdmin }) {
+export default function Messages({ messages, isAdmin }) {
     const { user } = useAuthContext();
-
-    const router = useRouter();
-    const supabase = createClientComponentClient();
-
-    useEffect(() => {
-        const channel = supabase
-            .channel(roomId || "public")
-            .on(
-                "postgres_changes",
-                {
-                    schema: "public",
-                    event: "*",
-                    table: "messages",
-                    filter: `room_id=eq.${roomId}`,
-                },
-                (payload) => {
-                    console.log("Change received", payload.new);
-                    router.refresh();
-                }
-            )
-            .subscribe();
-
-        console.log("Connected to channel", channel.topic);
-
-        return () => supabase.removeChannel(channel);
-    }, [supabase, router, roomId]);
 
     return (
         <ul>

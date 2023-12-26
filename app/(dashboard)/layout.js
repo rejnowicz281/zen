@@ -1,4 +1,5 @@
 import { AuthProvider } from "@/providers/AuthProvider";
+import RealTimeRoomsProvider from "@/providers/RealTimeRoomsProvider";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
@@ -10,5 +11,9 @@ export default async function DashboardLayout({ children }) {
         data: { user },
     } = await supabase.auth.getUser();
 
-    return <AuthProvider user={user}>{children}</AuthProvider>;
+    return (
+        <AuthProvider user={user}>
+            <RealTimeRoomsProvider>{children}</RealTimeRoomsProvider>
+        </AuthProvider>
+    );
 }
