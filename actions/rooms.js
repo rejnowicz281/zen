@@ -28,7 +28,7 @@ export async function getRoom(id) {
         supabase.from("rooms").select("id, name, public, admin: users(id, email, display_name)").eq("id", id).single(),
         supabase
             .from("messages")
-            .select("id, created_at, text, user: users (id, email, display_name)")
+            .select("id, created_at, text, deleted, user: users (id, email, display_name)")
             .eq("room_id", id)
             .order("created_at", { ascending: true }),
         supabase.from("room_memberships").select("accepted, user: users (id, email, display_name)").eq("room_id", id),

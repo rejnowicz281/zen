@@ -1,10 +1,14 @@
 "use client";
 
+import { deleteMessage } from "@/actions/messages";
+import useAuthContext from "@/providers/AuthProvider";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default function Messages({ messages, roomId }) {
+export default function Messages({ messages, roomId, isAdmin }) {
+    const { user } = useAuthContext();
+
     const router = useRouter();
     const supabase = createClientComponentClient();
 
@@ -20,7 +24,7 @@ export default function Messages({ messages, roomId }) {
                     filter: `room_id=eq.${roomId}`,
                 },
                 (payload) => {
-                    console.log("Message received", payload.new);
+                    console.log("Change received", payload.new);
                     router.refresh();
                 }
             )
@@ -36,7 +40,10 @@ export default function Messages({ messages, roomId }) {
             {messages.map((message) => (
                 <li key={message.id}>
                     <b>{message.user.display_name}: </b>
-                    <p>{message.text}</p>
+                    {!message.deleted && (isAdmin || message.user.id === user.id) && (
+                        <button onClick={() => deleteMessage(message.id)}>Delete</button>
+                    )}
+                    <p>{message.deleted ? "This message was deleted." : message.text}</p>
                 </li>
             ))}
         </ul>

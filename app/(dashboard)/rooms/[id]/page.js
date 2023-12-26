@@ -38,7 +38,7 @@ export default async function RoomPage({ params: { id } }) {
                 />
             )}
             {isAuthorized ? (
-                <Messages messages={room.messages} roomId={id} />
+                <Messages messages={room.messages} roomId={id} isAdmin={room.isAdmin} />
             ) : (
                 <div>You need to be an accepted member to see the messages.</div>
             )}
