@@ -3,7 +3,6 @@
 import actionError from "@/utils/actions/actionError";
 import actionSuccess from "@/utils/actions/actionSuccess";
 import { createClient } from "@/utils/supabase/server";
-import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 export async function getRooms() {
@@ -73,8 +72,6 @@ export async function createRoom(formData) {
 
     if (error) return actionError("createRoom", { error });
 
-    revalidatePath("/");
-
     return actionSuccess("createRoom", { name });
 }
 
@@ -88,8 +85,6 @@ export async function updateRoom(id, name, is_public) {
 
     if (error) return actionError("updateRoom", { error });
 
-    revalidatePath(`/rooms/${id}`);
-
     return actionSuccess("updateRoom", updateData);
 }
 
@@ -100,8 +95,6 @@ export async function deleteRoom(id) {
     const { data: room, error } = await supabase.from("rooms").delete().eq("id", id);
 
     if (error) return actionError("deleteRoom", { error });
-
-    revalidatePath("/");
 
     return actionSuccess("deleteRoom", { id });
 }
@@ -120,8 +113,6 @@ export async function createRoomMembership(room_id, user_id, room_is_public) {
 
     if (error) return actionError("createRoomMembership", { error });
 
-    revalidatePath(`/rooms/${room_id}`);
-
     return actionSuccess("createRoomMembership", { room_id, user_id });
 }
 
@@ -137,8 +128,6 @@ export async function updateRoomMembership(room_id, user_id, accepted) {
 
     if (error) return actionError("updateRoomMembership", { error });
 
-    revalidatePath("/");
-
     return actionSuccess("updateRoomMembership", { room_id, user_id, accepted });
 }
 
@@ -153,8 +142,6 @@ export async function deleteRoomMembership(room_id, user_id) {
         .eq("room_id", room_id);
 
     if (error) return actionError("deleteRoomMembership", { error });
-
-    revalidatePath(`/rooms/${room_id}`);
 
     return actionSuccess("deleteRoomMembership", { room_id, user_id });
 }
