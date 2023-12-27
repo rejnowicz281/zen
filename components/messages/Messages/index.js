@@ -18,7 +18,16 @@ export default function Messages({ messages, isAdmin }) {
                     {!message.deleted && (isAdmin || message.user.id === user.id) && (
                         <button onClick={() => deleteMessage(message.id)}>Delete</button>
                     )}
-                    <p>{message.deleted ? "This message was deleted." : message.text}</p>
+                    <div>
+                        {message.deleted ? (
+                            "This message was deleted."
+                        ) : (
+                            <>
+                                <p>{message.text}</p>
+                                {message.image_url && <Image src={message.image_url} width={100} height={100} />}
+                            </>
+                        )}
+                    </div>
                 </li>
             ))}
         </ul>

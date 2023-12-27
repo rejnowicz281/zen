@@ -32,7 +32,7 @@ export async function getRoom(id) {
             .single(),
         supabase
             .from("messages")
-            .select("id, created_at, text, deleted, user: users (id, email, avatar_url, display_name)")
+            .select("id, created_at, text, deleted, image_url, user: users (id, email, avatar_url, display_name)")
             .eq("room_id", id)
             .order("created_at", { ascending: true }),
         supabase
