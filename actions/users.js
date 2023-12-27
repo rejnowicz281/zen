@@ -3,6 +3,15 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
+export async function getAllUsers() {
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+
+    const { data: users, error } = await supabase.from("users").select("id, email, display_name, avatar_url");
+
+    return users;
+}
+
 export async function getUserInfo(id) {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);

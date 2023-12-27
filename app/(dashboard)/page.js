@@ -13,6 +13,8 @@ export default async function Home() {
             <form action={signOut}>
                 <button>Logout</button>
             </form>
+            <Link href="/users">Users</Link>
+
             <CreateRoom />
             <ul>
                 {rooms.map((room) => (
