@@ -1,5 +1,7 @@
 "use server";
 
+import actionError from "@/utils/actions/actionError";
+import actionSuccess from "@/utils/actions/actionSuccess";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
@@ -69,25 +71,11 @@ export async function createRoom(formData) {
 
     const { data: room, error } = await supabase.from("rooms").insert([{ name, admin_id: user.id, public: is_public }]);
 
-    if (error) {
-        const data = {
-            action: "createRoom",
-            success: false,
-            error,
-        };
-        console.error(data);
-        return data;
-    }
+    if (error) return actionError("createRoom", { error });
 
     revalidatePath("/");
 
-    const data = {
-        action: "createRoom",
-        success: true,
-        name,
-    };
-    console.log(data);
-    return data;
+    return actionSuccess("createRoom", { name });
 }
 
 export async function updateRoom(id, name, is_public) {
@@ -98,25 +86,11 @@ export async function updateRoom(id, name, is_public) {
 
     const { data: room, error } = await supabase.from("rooms").update(updateData).eq("id", id);
 
-    if (error) {
-        const data = {
-            action: "updateRoom",
-            success: false,
-            error,
-        };
-        console.error(data);
-        return data;
-    }
+    if (error) return actionError("updateRoom", { error });
 
     revalidatePath(`/rooms/${id}`);
 
-    const data = {
-        action: "updateRoom",
-        success: true,
-        name,
-    };
-    console.log(data);
-    return data;
+    return actionSuccess("updateRoom", updateData);
 }
 
 export async function deleteRoom(id) {
@@ -125,25 +99,11 @@ export async function deleteRoom(id) {
 
     const { data: room, error } = await supabase.from("rooms").delete().eq("id", id);
 
-    if (error) {
-        const data = {
-            action: "deleteRoom",
-            success: false,
-            error,
-        };
-        console.error(data);
-        return data;
-    }
+    if (error) return actionError("deleteRoom", { error });
 
     revalidatePath("/");
 
-    const data = {
-        action: "deleteRoom",
-        success: true,
-        id,
-    };
-    console.log(data);
-    return data;
+    return actionSuccess("deleteRoom", { id });
 }
 
 export async function createRoomMembership(room_id, user_id, room_is_public) {
@@ -158,26 +118,11 @@ export async function createRoomMembership(room_id, user_id, room_is_public) {
         .from("room_memberships")
         .insert([{ user_id, room_id, accepted: room_is_public }]);
 
-    if (error) {
-        const data = {
-            action: "createRoomMembership",
-            success: false,
-            error,
-        };
-        console.error(data);
-        return data;
-    }
+    if (error) return actionError("createRoomMembership", { error });
 
     revalidatePath(`/rooms/${room_id}`);
 
-    const data = {
-        action: "createRoomMembership",
-        success: true,
-        room_id,
-        user_id,
-    };
-    console.log(data);
-    return data;
+    return actionSuccess("createRoomMembership", { room_id, user_id });
 }
 
 export async function updateRoomMembership(room_id, user_id, accepted) {
@@ -190,27 +135,11 @@ export async function updateRoomMembership(room_id, user_id, accepted) {
         .eq("user_id", user_id)
         .eq("room_id", room_id);
 
-    if (error) {
-        const data = {
-            action: "updateRoomMembership",
-            success: false,
-            error,
-        };
-        console.error(data);
-        return data;
-    }
+    if (error) return actionError("updateRoomMembership", { error });
 
     revalidatePath("/");
 
-    const data = {
-        action: "updateRoomMembership",
-        success: true,
-        room_id,
-        user_id,
-        accepted,
-    };
-    console.log(data);
-    return data;
+    return actionSuccess("updateRoomMembership", { room_id, user_id, accepted });
 }
 
 export async function deleteRoomMembership(room_id, user_id) {
@@ -223,24 +152,9 @@ export async function deleteRoomMembership(room_id, user_id) {
         .eq("user_id", user_id)
         .eq("room_id", room_id);
 
-    if (error) {
-        const data = {
-            action: "deleteRoomMembership",
-            success: false,
-            error,
-        };
-        console.error(data);
-        return data;
-    }
+    if (error) return actionError("deleteRoomMembership", { error });
 
     revalidatePath(`/rooms/${room_id}`);
 
-    const data = {
-        action: "deleteRoomMembership",
-        success: true,
-        room_id,
-        user_id,
-    };
-    console.log(data);
-    return data;
+    return actionSuccess("deleteRoomMembership", { room_id, user_id });
 }

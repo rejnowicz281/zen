@@ -1,5 +1,7 @@
 "use server";
 
+import actionError from "@/utils/actions/actionError";
+import actionSuccess from "@/utils/actions/actionSuccess";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
@@ -20,15 +22,7 @@ export async function createMessage(formData) {
 
     const { data: image, imageError } = await bucket.upload(fileName, imageFile);
 
-    if (imageError) {
-        const data = {
-            action: "createMessage",
-            success: false,
-            imageError,
-        };
-        console.error(data);
-        return data;
-    }
+    if (imageError) return actionError("createMessage", { imageError });
 
     const image_url = imageFile.type.startsWith("image/") ? bucket.getPublicUrl(fileName).data.publicUrl : null;
 
@@ -36,23 +30,9 @@ export async function createMessage(formData) {
         .from("messages")
         .insert([{ text, user_id: user.id, room_id, image_url }]);
 
-    if (messageError) {
-        const data = {
-            action: "createMessage",
-            success: false,
-            messageError,
-        };
-        console.error(data);
-        return data;
-    }
+    if (messageError) return actionError("createMessage", { messageError });
 
-    const data = {
-        action: "createMessage",
-        success: true,
-        text,
-    };
-    console.log(data);
-    return data;
+    return actionSuccess("createMessage", { text });
 }
 
 export async function deleteMessage(id) {
@@ -61,21 +41,7 @@ export async function deleteMessage(id) {
 
     const { error } = await supabase.from("messages").update({ deleted: true }).match({ id });
 
-    if (error) {
-        const data = {
-            action: "deleteMessage",
-            success: false,
-            error,
-        };
-        console.error(data);
-        return data;
-    }
+    if (error) return actionError("deleteMessage", { error });
 
-    const data = {
-        action: "deleteMessage",
-        success: true,
-        id,
-    };
-    console.log(data);
-    return data;
+    return actionSuccess("deleteMessage", { id });
 }
