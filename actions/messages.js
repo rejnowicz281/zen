@@ -30,7 +30,7 @@ export async function createMessage(formData) {
         return data;
     }
 
-    const image_url = bucket.getPublicUrl(fileName).data.publicUrl;
+    const image_url = imageFile.type.startsWith("image/") ? bucket.getPublicUrl(fileName).data.publicUrl : null;
 
     const { data: message, messageError } = await supabase
         .from("messages")
