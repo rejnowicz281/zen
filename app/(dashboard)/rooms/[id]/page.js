@@ -1,57 +1,23 @@
 import { getRoom } from "@/actions/rooms";
-import CreateMessage from "@/components/messages/CreateMessage";
-import Messages from "@/components/messages/Messages";
-import JoinRequests from "@/components/rooms/JoinRequests";
-import MembersList from "@/components/rooms/MembersList";
-import MembershipButton from "@/components/rooms/MembershipButton";
-import UpdateRoom from "@/components/rooms/UpdateRoom";
+import MessagesContainer from "@/components/rooms/MessagesContainer";
+import Sidebar from "@/components/rooms/Sidebar";
 import RealTimeRoomProvider from "@/providers/RealTimeRoomProvider";
-import Image from "next/image";
-import Link from "next/link";
+import css from "./page.module.css";
 
 export default async function RoomPage({ params: { id } }) {
     const room = await getRoom(id);
 
-    const isAuthorized = room.public || room.isAccepted || room.isAdmin;
-
     return (
         <RealTimeRoomProvider roomId={id}>
-            <div>
-                <Link href="/">Back</Link>
-                <h1>{room.name}</h1>
-                {room.isAdmin && <UpdateRoom name={room.name} isPublic={room.public} id={id} />}
-                {room.admin && (
-                    <p>
-                        admin:
-                        <Link href={`/users/${room.admin.id}`}>
-                            <Image src={room.admin.avatar_url} width={32} height={32} />
-                            {room.admin.display_name}
-                        </Link>
-                    </p>
-                )}
-                {!room.public && <p>This is a private room.</p>}
-                {room.isAdmin && (
-                    <JoinRequests requests={room.members.filter((member) => !member.accepted)} roomId={room.id} />
-                )}
-                {isAuthorized ? (
-                    <MembersList members={room.acceptedMembers} isAdmin={room.isAdmin} roomId={id} />
-                ) : (
-                    <div>You need to be an accepted member to see other members of this room.</div>
-                )}
-                {!room.isAdmin && (
-                    <MembershipButton
-                        isPublic={room.public}
-                        isAccepted={room.isAccepted}
-                        isMember={room.isMember}
-                        roomId={id}
-                    />
-                )}
-                {isAuthorized ? (
-                    <Messages messages={room.messages} roomId={id} isAdmin={room.isAdmin} />
-                ) : (
-                    <div>You need to be an accepted member to see the messages.</div>
-                )}
-                {(room.isAdmin || room.isAccepted) && <CreateMessage roomId={id} />}
+            <div className={css.container}>
+                <MessagesContainer
+                    roomId={id}
+                    isAdmin={room.isAdmin}
+                    isAccepted={room.isAccepted}
+                    roomIsPublic={room.public}
+                    messages={room.messages}
+                />
+                <Sidebar room={room} />
             </div>
         </RealTimeRoomProvider>
     );

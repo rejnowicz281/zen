@@ -1,0 +1,101 @@
+.container {
+    padding: 100px 50px 50px 50px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    transition: 0.3s;
+    max-width: 350px;
+    width: 100%;
+}
+
+.toggle {
+    display: none;
+    background-color: inherit;
+    border: none;
+    color: whitesmoke;
+    font-size: 40px;
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.heading {
+    text-align: center;
+    word-break: break-all;
+    margin-bottom: 10px;
+}
+
+.private {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.leave,
+.kick,
+.join {
+    border: none;
+    width: 100%;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.leave:disabled,
+.kick:disabled,
+.join:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.join {
+    color: white;
+    background-color: rgb(90, 150, 135);
+}
+
+.join:hover {
+    background-color: rgb(114, 174, 160);
+}
+
+.leave,
+.kick {
+    color: white;
+    background-color: rgb(179, 115, 86);
+}
+
+.leave:hover,
+.kick:hover {
+    background-color: rgb(204, 140, 111);
+}
+
+.members {
+    margin-top: 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.member-container {
+    margin: 30px 0;
+}
+
+.member-container:first-of-type {
+    margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+    .container {
+        background-color: #191e1f;
+        border-left: 1px solid #2c2c2c;
+        position: fixed;
+        right: -350px;
+        min-height: 100vh;
+        z-index: 1;
+    }
+    .toggle {
+        display: block;
+    }
+    .open {
+        right: 0;
+    }
+}

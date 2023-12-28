@@ -12,7 +12,7 @@ export async function getRooms() {
     const { data: rooms, error } = await supabase
         .from("rooms")
         .select("id, name")
-        .order("created_at", { ascending: true });
+        .order("created_at", { ascending: false });
 
     return rooms;
 }
