@@ -74,19 +74,21 @@ export default function Sidebar({ room }) {
                                     />
                                 </div>
                             ))}
-                    {room.acceptedMembers.map((member) => (
-                        <div className={css["member-container"]} key={member.id}>
-                            <UserBox user={member} adminTag={member.id === room.admin.id} />
-                            {room.isAdmin && member.id !== room.admin && (
-                                <AsyncButton
-                                    className={css.kick}
-                                    mainAction={() => deleteRoomMembership(room.id, member.id)}
-                                    content="Kick"
-                                    loadingContent="Kicking..."
-                                />
-                            )}
-                        </div>
-                    ))}
+                    {room.members
+                        .filter((member) => member.accepted)
+                        .map((member) => (
+                            <div className={css["member-container"]} key={member.id}>
+                                <UserBox user={member} adminTag={member.id === room.admin.id} />
+                                {room.isAdmin && member.id !== room.admin && (
+                                    <AsyncButton
+                                        className={css.kick}
+                                        mainAction={() => deleteRoomMembership(room.id, member.id)}
+                                        content="Kick"
+                                        loadingContent="Kicking..."
+                                    />
+                                )}
+                            </div>
+                        ))}
                 </div>
             </div>
         </>

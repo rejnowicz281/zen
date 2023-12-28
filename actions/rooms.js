@@ -48,7 +48,6 @@ export async function getRoom(id) {
         ...roomData.data,
         messages: messagesData.data,
         members: membersData.data.map((member) => ({ accepted: member.accepted, ...member.user })),
-        acceptedMembers: membersData.data.filter((member) => member.accepted).map((member) => member.user),
         isMember: !!member,
         isAccepted: member?.accepted || false,
         isAdmin: roomData.data.admin?.id === user.id,
