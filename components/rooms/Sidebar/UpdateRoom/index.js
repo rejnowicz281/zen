@@ -20,17 +20,17 @@ export default function UpdateRoom({ id, name, isPublic }) {
 
     return (
         <>
-            <form ref={formRef} action={handleNameUpdate}>
-                <input type="hidden" name="id" value={id} />
-                <input className={css.input} type="text" name="name" placeholder="New Room Name" />
-                <SubmitButton className={css.submit} loading="Updating..." content="Update" />
-            </form>
             <AsyncButton
-                className={css.submit}
+                className={isPublic ? css["make-private"] : css["make-public"]}
                 content={isPublic ? "Make room private" : "Make room public"}
                 loadingContent={isPublic ? "Making room private..." : "Making room public..."}
                 mainAction={() => updateRoom(id, name, !isPublic)}
             />
+            <form ref={formRef} action={handleNameUpdate}>
+                <input type="hidden" name="id" value={id} />
+                <input className={css.input} type="text" name="name" placeholder="New Room Name" />
+                <SubmitButton className={css.submit} loading="Updating..." content="Update Name" />
+            </form>
         </>
     );
 }

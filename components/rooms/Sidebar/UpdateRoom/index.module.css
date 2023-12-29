@@ -2,14 +2,15 @@
     width: 100%;
     box-sizing: border-box;
     text-align: center;
-    margin: 10px 0;
     padding: 10px 20px;
+    margin: 10px 0;
     background-color: rgb(24, 24, 28);
     transition: 0.1s;
     color: whitesmoke;
     border: none;
     box-shadow: 0 0 1px grey;
     font-weight: 500;
+    border-radius: 4px;
 }
 
 .input:focus {
@@ -21,22 +22,44 @@
     box-shadow: 0 0 3px grey;
 }
 
-.submit {
+.submit,
+.make-public,
+.make-private {
     border: none;
     width: 100%;
     padding: 10px 20px;
-    margin: 10px 0;
     cursor: pointer;
     color: white;
-    background-color: rgb(90, 150, 135);
     transition: 0.1s;
+    border-radius: 4px;
+}
+
+.submit {
+    background-color: rgb(90, 150, 135);
+}
+
+.make-public,
+.make-private {
+    margin-top: 10px;
+}
+
+.make-public,
+.make-private:hover {
+    background-color: rgb(14, 85, 99);
 }
 
 .submit:hover {
     background-color: rgb(114, 174, 160);
 }
 
-.submit:disabled {
+.make-private,
+.make-public:hover {
+    background-color: rgb(12, 74, 87);
+}
+
+.submit:disabled,
+.make-public:disabled,
+.make-private:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }

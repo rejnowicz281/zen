@@ -34,38 +34,48 @@
 
 .leave,
 .kick,
-.join {
+.join,
+.accept,
+.reject {
     border: none;
     width: 100%;
     padding: 10px 20px;
     cursor: pointer;
     transition: 0.1s;
+    margin-top: 10px;
+    border-radius: 4px;
 }
 
 .leave:disabled,
 .kick:disabled,
-.join:disabled {
+.join:disabled,
+.accept:disabled,
+.reject:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-.join {
+.join,
+.accept {
     color: white;
     background-color: rgb(90, 150, 135);
 }
 
-.join:hover {
+.join:hover,
+.accept:hover {
     background-color: rgb(114, 174, 160);
 }
 
 .leave,
-.kick {
+.kick,
+.reject {
     color: white;
     background-color: rgb(179, 115, 86);
 }
 
 .leave:hover,
-.kick:hover {
+.kick:hover,
+.reject:hover {
     background-color: rgb(204, 140, 111);
 }
 
@@ -77,6 +87,8 @@
 
 .member-container {
     margin: 30px 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .member-container:first-of-type {
