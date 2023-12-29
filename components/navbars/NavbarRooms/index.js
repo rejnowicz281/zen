@@ -8,9 +8,11 @@ export default async function NavbarRooms() {
 
     return (
         <nav className={cssNavbar.container}>
-            <NavLink className={cssNavbar["main-button"]} activeClassName={cssNavbar.active} href="/rooms/new">
-                Create New Room
-            </NavLink>
+            <div className={cssNavbar["main-buttons"]}>
+                <NavLink className={cssNavbar["main-button"]} activeClassName={cssNavbar.active} href="/rooms/new">
+                    Create New Room
+                </NavLink>
+            </div>
             {rooms && (
                 <div className={cssNavbar["list-wrapper"]}>
                     <div className={cssNavbar.list}>

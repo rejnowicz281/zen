@@ -1,5 +1,5 @@
 import { getAllUsers } from "@/actions/users";
-import Link from "next/link";
+import UserBox from "@/components/general/UserBox";
 import css from "./page.module.css";
 
 export default async function UsersPage() {
@@ -7,15 +7,16 @@ export default async function UsersPage() {
 
     return (
         <div className={css.container}>
-            <Link href="/">Back</Link>
-            <h1>Users</h1>
-            <ul>
-                {users.map((user) => (
-                    <li key={user.id}>
-                        <Link href={`/users/${user.id}`}>{user.display_name}</Link>
-                    </li>
-                ))}
-            </ul>
+            <h1 className={css.heading}>Users</h1>
+            <div className={css["list-wrapper"]}>
+                <div className={css.list}>
+                    {users.map((user) => (
+                        <div className={css.user} key={user.id}>
+                            <UserBox user={user} />
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 }
