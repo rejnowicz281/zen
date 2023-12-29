@@ -4,13 +4,23 @@ import { deleteMessage } from "@/actions/messages";
 import AsyncButton from "@/components/general/AsyncButton";
 import UserBox from "@/components/general/UserBox";
 import useAuthContext from "@/providers/AuthProvider";
+import { useEffect, useRef } from "react";
 import css from "./index.module.css";
 
 export default function MessagesList({ messages, isAdmin }) {
     const { user } = useAuthContext();
 
+    const messagesRef = useRef(null);
+
+    useEffect(() => {
+        if (messages && messagesRef.current) {
+            const container = messagesRef.current;
+            container.scrollTop = container.scrollHeight;
+        }
+    }, [messages]);
+
     return (
-        <div className={css.container}>
+        <div ref={messagesRef} className={css.container}>
             {messages.map((message) => (
                 <div className={css.message} key={message.id}>
                     <UserBox user={message.user} />
