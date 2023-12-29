@@ -51,9 +51,11 @@ export default function Sidebar({ room }) {
                     ))}
                 <div className={css.members}>
                     <h3>Members</h3>
-                    <div className={css["member-container"]}>
-                        <UserBox user={room.admin} adminTag={true} />
-                    </div>
+                    {room.admin && (
+                        <div className={css["member-container"]}>
+                            <UserBox user={room.admin} adminTag={true} />
+                        </div>
+                    )}
                     {room.isAdmin &&
                         room.members
                             .filter((member) => !member.accepted)
@@ -78,8 +80,8 @@ export default function Sidebar({ room }) {
                         .filter((member) => member.accepted)
                         .map((member) => (
                             <div className={css["member-container"]} key={member.id}>
-                                <UserBox user={member} adminTag={member.id === room.admin.id} />
-                                {room.isAdmin && member.id !== room.admin && (
+                                <UserBox user={member} />
+                                {room.isAdmin && member.id !== room.admin?.id && (
                                     <AsyncButton
                                         className={css.kick}
                                         mainAction={() => deleteRoomMembership(room.id, member.id)}
