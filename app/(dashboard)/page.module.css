@@ -1,0 +1,24 @@
+.container {
+    padding: 100px 50px 50px 50px;
+}
+
+.heading {
+    border-bottom: 1px solid #414141;
+    padding-bottom: 10px;
+}
+
+.link-wrapper {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 13px;
+}
+
+.link-wrapper > a {
+    text-decoration: none;
+    color: rgb(255, 187, 187);
+    transition: 0.1s;
+}
+
+.link-wrapper > a:hover {
+    color: rgb(255, 255, 255);
+}
