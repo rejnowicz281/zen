@@ -42,6 +42,10 @@ export async function getRoom(id) {
             .eq("room_id", id),
     ]);
 
+    if (roomData.error) return actionError("getRoom", { error: roomData.error });
+    if (messagesData.error) return actionError("getRoom", { error: messagesData.error });
+    if (membersData.error) return actionError("getRoom", { error: membersData.error });
+
     const member = membersData.data.find((member) => member.user.id === user.id);
 
     const room = {

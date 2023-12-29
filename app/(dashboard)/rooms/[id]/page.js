@@ -7,6 +7,13 @@ import css from "./page.module.css";
 export default async function RoomPage({ params: { id } }) {
     const room = await getRoom(id);
 
+    if (room.error)
+        return (
+            <div className={css["error-container"]}>
+                An error occured while loading this room. Are you sure it exists? 🤔
+            </div>
+        );
+
     return (
         <RealTimeRoomProvider roomId={id}>
             <div className={css.container}>
