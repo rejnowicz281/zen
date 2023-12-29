@@ -11,11 +11,20 @@ export default function MessagesList({ messages, isAdmin }) {
     const { user } = useAuthContext();
 
     const messagesRef = useRef(null);
+    const previousMessageCount = useRef(0);
 
     useEffect(() => {
         if (messages && messagesRef.current) {
             const container = messagesRef.current;
-            container.scrollTop = container.scrollHeight;
+            const currentMessageCount = messages.length;
+
+            // Scroll down only if a new message is added
+            if (currentMessageCount > previousMessageCount.current) {
+                const lastMessage = container.lastChild;
+                lastMessage.scrollIntoView({ behavior: "smooth" });
+            }
+
+            previousMessageCount.current = currentMessageCount;
         }
     }, [messages]);
 
