@@ -1,0 +1,56 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 300px;
+    width: 100%;
+    text-align: center;
+}
+
+.heading {
+    letter-spacing: 3px;
+    font-style: italic;
+}
+
+.github,
+.google {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #2b2b2b;
+    border-radius: 5px;
+    outline: none;
+    transition: 0.1s;
+    cursor: pointer;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    gap: 8px;
+}
+
+.github {
+    color: white;
+    background-color: rgb(50, 50, 56);
+}
+
+.github:hover {
+    background-color: rgb(62, 62, 70);
+}
+
+.google {
+    color: rgb(0, 0, 0);
+    background-color: whitesmoke;
+}
+
+.google:hover {
+    background-color: rgb(212, 212, 212);
+}
+
+.icon {
+    font-size: 23px;
+}
