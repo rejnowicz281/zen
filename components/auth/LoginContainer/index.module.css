@@ -1,0 +1,10 @@
+.error {
+    color: rgb(255, 115, 115);
+    margin-bottom: 40px;
+}
+
+.oauth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
