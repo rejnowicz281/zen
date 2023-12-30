@@ -1,15 +1,14 @@
 import { signIn } from "@/actions/auth";
-import ErrorMessage from "@/components/auth/ErrorMessage";
+import FormMessages from "@/components/auth/FormMessages";
 import SubmitButton from "@/components/general/SubmitButton";
 import Link from "next/link";
 import cssAuth from "../index.module.css";
-import cssLogin from "./index.module.css";
 
 export default function LoginContainer() {
     return (
         <div className={cssAuth.container}>
             <h2 className={cssAuth.heading}>Login</h2>
-            <ErrorMessage className={cssLogin.error} />
+            <FormMessages />
             <form action={signIn}>
                 <div className={cssAuth["form-field"]}>
                     <label htmlFor="email">Email</label>

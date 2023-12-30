@@ -1,5 +1,5 @@
 import { signUp } from "@/actions/auth";
-import ErrorMessage from "@/components/auth/ErrorMessage";
+import FormMessages from "@/components/auth/FormMessages";
 import ImagePicker from "@/components/general/ImagePicker";
 import SubmitButton from "@/components/general/SubmitButton";
 import Link from "next/link";
@@ -10,7 +10,7 @@ export default function RegisterContainer() {
     return (
         <div className={cssAuth.container}>
             <h2 className={cssAuth.heading}>Register</h2>
-            <ErrorMessage className={cssRegister.error} />
+            <FormMessages />
             <form action={signUp}>
                 <div className={cssAuth["form-field"]}>
                     <label htmlFor="email">Email</label>
