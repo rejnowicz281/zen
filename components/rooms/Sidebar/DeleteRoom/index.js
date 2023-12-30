@@ -9,9 +9,9 @@ export default function DeleteRoom({ id }) {
     return (
         <AsyncButton
             className={css.button}
-            mainAction={() => {
-                deleteRoom(id);
-                router.push("/");
+            mainAction={async () => {
+                const res = await deleteRoom(id);
+                if (res.success) router.push("/");
             }}
             content="Delete Room"
             loadingContent="Deleting..."
