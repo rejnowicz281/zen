@@ -39,7 +39,7 @@ export async function deleteMessage(id) {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
 
-    const { error } = await supabase.from("messages").update({ deleted: true }).match({ id });
+    const { data: message, error } = await supabase.from("messages").delete().eq("id", id);
 
     if (error) return actionError("deleteMessage", { error });
 
