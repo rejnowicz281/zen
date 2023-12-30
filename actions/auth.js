@@ -32,6 +32,18 @@ export async function signUp(formData) {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
 
+    const queryParams = new URLSearchParams();
+
+    if (!email) queryParams.append("message", "Email is required");
+    if (!email.includes("@")) queryParams.append("message", "Email must be valid");
+    if (!display_name) queryParams.append("message", "Username is required");
+    if (!password) queryParams.append("message", "Password is required");
+    if (password.length < 6) queryParams.append("message", "Password must be at least 6 characters");
+    if (!passwordConfirm) queryParams.append("message", "Password confirmation is required");
+    if (password !== passwordConfirm) queryParams.append("message", "Passwords do not match");
+
+    if (queryParams.toString()) return redirect(`/register?${queryParams.toString()}`);
+
     const bucket = supabase.storage.from("avatars");
     const fileName = `${Date.now()}`;
 
@@ -55,7 +67,7 @@ export async function signUp(formData) {
         },
     });
 
-    if (error) return redirect("/register?message=There was an error creating your account");
+    if (error) return redirect(`/register?message=${error.message}`);
 
     return redirect("/");
 }
