@@ -4,6 +4,7 @@ import UserBox from "@/components/general/UserBox";
 import NavbarLogout from "@/components/navbars/NavbarLogout";
 import NavbarUsers from "@/components/navbars/NavbarUsers";
 import useAuthContext from "@/providers/AuthProvider";
+import removeDuplicates from "@/utils/general/removeDuplicates";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -32,7 +33,8 @@ export default function MainSidebar({ NavbarRooms }) {
                 const newState = presenceChannel.presenceState();
                 console.log("sync", newState);
                 const newStateArray = Object.values(newState).map((arr) => arr[0]);
-                setLoggedUsers(newStateArray);
+                const pushArray = removeDuplicates(newStateArray);
+                setLoggedUsers(pushArray);
             })
             .subscribe(async (status) => {
                 if (status !== "SUBSCRIBED") {
