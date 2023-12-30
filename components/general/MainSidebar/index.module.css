@@ -39,6 +39,7 @@
     font-weight: bold;
     padding: 20px 10px;
     cursor: pointer;
+    transition: 0.1s;
 }
 
 .buttons > button:hover {

@@ -22,6 +22,7 @@
     border: none;
     margin-bottom: 1px;
     cursor: pointer;
+    transition: 0.1s;
 }
 
 .main-button:last-child {
@@ -30,9 +31,14 @@
 }
 
 .main-button:hover,
-.main-button.active {
+.main-button.active,
+.main-button:disabled {
     color: #c0c0c0;
     background-color: rgb(12, 74, 87);
+}
+
+.main-button:disabled {
+    cursor: not-allowed;
 }
 
 .list-wrapper {
