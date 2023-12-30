@@ -6,6 +6,13 @@ import css from "./page.module.css";
 export default async function UserPage({ params: { id } }) {
     const userInfo = await getUserInfo(id);
 
+    if (userInfo.error)
+        return (
+            <div className={css["error-container"]}>
+                An error occured while fetching this user's information. Are you sure the ID is correct? 🤔
+            </div>
+        );
+
     return (
         <div className={css.container}>
             <div className={css["user-wrapper"]}>

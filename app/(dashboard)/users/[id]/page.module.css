@@ -55,3 +55,14 @@
 .no-rooms {
     text-align: center;
 }
+
+.error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    font-size: 18px;
+    padding: 0 10px;
+    font-weight: bold;
+}

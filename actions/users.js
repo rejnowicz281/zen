@@ -1,5 +1,6 @@
 "use server";
 
+import actionError from "@/utils/actions/actionError";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
@@ -28,10 +29,18 @@ export async function getUserInfo(id) {
                     .select("room_id")
                     .eq("user_id", id)
                     .eq("accepted", true)
-                    .then((res) => res.data.map((row) => row.room_id))
+                    .then((res) => {
+                        if (res.error) return [];
+
+                        return res.data.map((row) => row.room_id);
+                    })
             ),
         supabase.from("rooms").select("id, name").eq("admin_id", id),
     ]);
+
+    if (userData.error) return actionError("getUserInfo", { error: userData.error });
+    if (userRoomsData.error) return actionError("getUserInfo", { error: userRoomsData.error });
+    if (adminRoomsData.error) return actionError("getUserInfo", { error: adminRoomsData.error });
 
     const userInfo = {
         ...userData.data,
