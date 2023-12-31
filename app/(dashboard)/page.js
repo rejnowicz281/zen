@@ -10,9 +10,6 @@ export default function Home() {
                 <Link href="/rooms/new">Create a room</Link>
             </li>
             <li className={css["link-wrapper"]}>
-                <Link href="/users">See all users</Link>
-            </li>
-            <li className={css["link-wrapper"]}>
                 <ProfileLink />
             </li>
         </div>
