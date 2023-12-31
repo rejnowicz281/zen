@@ -99,7 +99,7 @@ export async function deleteRoom(id) {
 
     if (error) return actionError("deleteRoom", { error });
 
-    return actionSuccess("deleteRoom", { id });
+    return actionSuccess("deleteRoom", { id }, "/");
 }
 
 export async function createRoomMembership(room_id, user_id, room_is_public) {
