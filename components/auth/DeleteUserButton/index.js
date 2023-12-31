@@ -8,7 +8,7 @@ import css from "./index.module.css";
 export default function DeleteUserButton(id) {
     const { user } = useAuthContext();
 
-    if (user.id !== id.id || user.id === process.env.DEMO_USER_ID) return;
+    if (user.id !== id.id || user.email === "demo@demo.demo") return;
 
     return (
         <AsyncButton

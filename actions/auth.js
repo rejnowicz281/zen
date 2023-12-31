@@ -113,7 +113,7 @@ export async function demoLogin() {
     const supabase = createClient(cookieStore);
 
     const { error } = await supabase.auth.signInWithPassword({
-        email: "demo@gmail.com",
+        email: "demo@demo.demo",
         password: "123456",
     });
 
