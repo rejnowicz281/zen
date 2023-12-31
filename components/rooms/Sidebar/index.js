@@ -53,7 +53,7 @@ export default function Sidebar({ room }) {
                     <h3>Members</h3>
                     {room.admin && (
                         <div className={css["member-container"]}>
-                            <UserBox user={room.admin} adminTag={true} />
+                            <UserBox user={room.admin} tag="Admin" />
                         </div>
                     )}
                     {room.isAdmin &&

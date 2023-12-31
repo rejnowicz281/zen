@@ -1,5 +1,6 @@
 import MainSidebar from "@/components/general/MainSidebar";
 import NavbarRooms from "@/components/navbars/NavbarRooms";
+import NavbarUsers from "@/components/navbars/NavbarUsers";
 import { AuthProvider } from "@/providers/AuthProvider";
 import RealTimeRoomsProvider from "@/providers/RealTimeRoomsProvider";
 import { createClient } from "@/utils/supabase/server";
@@ -18,7 +19,7 @@ export default async function DashboardLayout({ children }) {
         <AuthProvider user={user}>
             <RealTimeRoomsProvider>
                 <div className={css.container}>
-                    <MainSidebar NavbarRooms={<NavbarRooms />} />
+                    <MainSidebar NavbarRooms={<NavbarRooms />} NavbarUsers={<NavbarUsers />} />
 
                     <main className={css.main}>{children}</main>
                 </div>
