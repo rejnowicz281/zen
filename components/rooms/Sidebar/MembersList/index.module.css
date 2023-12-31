@@ -1,0 +1,9 @@
+.member-container {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.member-container:last-child {
+    margin-bottom: 0;
+}

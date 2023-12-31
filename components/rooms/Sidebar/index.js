@@ -1,23 +1,28 @@
 "use client";
 
-import { createRoomMembership, deleteRoomMembership, updateRoomMembership } from "@/actions/rooms";
+import { createRoomMembership, deleteRoomMembership } from "@/actions/rooms";
 import AsyncButton from "@/components/general/AsyncButton";
-import UserBox from "@/components/general/UserBox";
 import useAuthContext from "@/providers/AuthProvider";
+import usePresenceContext from "@/providers/PresenceProvider";
 import { useState } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import DeleteRoom from "./DeleteRoom";
+import MembersList from "./MembersList";
 import UpdateRoom from "./UpdateRoom";
 import css from "./index.module.css";
 
 export default function Sidebar({ room }) {
     const { user } = useAuthContext();
+    const { loggedUsers } = usePresenceContext();
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     function toggleSidebar() {
         setSidebarOpen(!sidebarOpen);
     }
+
+    const onlineMembers = room.members.filter((user) => loggedUsers.includes(user.id));
+    const offlineMembers = room.members.filter((user) => !loggedUsers.includes(user.id));
 
     return (
         <>
@@ -50,47 +55,18 @@ export default function Sidebar({ room }) {
                         />
                     ))}
                 <div className={css.members}>
-                    <h3>Members</h3>
-                    {room.admin && (
-                        <div className={css["member-container"]}>
-                            <UserBox user={room.admin} tag="Admin" />
-                        </div>
+                    {onlineMembers.length > 0 && (
+                        <>
+                            <h5 className={css["members-heading"]}>Online Members ({onlineMembers.length})</h5>
+                            <MembersList members={onlineMembers} roomAdmin={room.admin} isAdmin={room.isAdmin} />
+                        </>
                     )}
-                    {room.isAdmin &&
-                        room.members
-                            .filter((member) => !member.accepted)
-                            .map((member) => (
-                                <div className={css["member-container"]} key={member.id}>
-                                    <UserBox user={member} />
-                                    <AsyncButton
-                                        className={css.accept}
-                                        mainAction={() => updateRoomMembership(room.id, member.id, true)}
-                                        content="Accept"
-                                        loadingContent="Accepting..."
-                                    />
-                                    <AsyncButton
-                                        className={css.reject}
-                                        mainAction={() => deleteRoomMembership(room.id, member.id)}
-                                        content="Reject"
-                                        loadingContent="Rejecting..."
-                                    />
-                                </div>
-                            ))}
-                    {room.members
-                        .filter((member) => member.accepted)
-                        .map((member) => (
-                            <div className={css["member-container"]} key={member.id}>
-                                <UserBox user={member} />
-                                {room.isAdmin && member.id !== room.admin?.id && (
-                                    <AsyncButton
-                                        className={css.kick}
-                                        mainAction={() => deleteRoomMembership(room.id, member.id)}
-                                        content="Kick"
-                                        loadingContent="Kicking..."
-                                    />
-                                )}
-                            </div>
-                        ))}
+                    {offlineMembers.length > 0 && (
+                        <>
+                            <h5 className={css["members-heading"]}>Offline Members</h5>
+                            <MembersList members={offlineMembers} roomAdmin={room.admin} isAdmin={room.isAdmin} />
+                        </>
+                    )}
                 </div>
             </div>
         </>

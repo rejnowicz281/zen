@@ -3,7 +3,6 @@
 import UserBox from "@/components/general/UserBox";
 import NavbarLogout from "@/components/navbars/NavbarLogout";
 import useAuthContext from "@/providers/AuthProvider";
-import { PresenceProvider } from "@/providers/PresenceProvider";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { HiMiniBars3BottomLeft } from "react-icons/hi2";
@@ -25,7 +24,7 @@ export default function MainSidebar({ NavbarRooms, NavbarUsers }) {
     }
 
     return (
-        <PresenceProvider>
+        <>
             <button onClick={toggleSidebar} className={css.toggle} type="button">
                 <HiMiniBars3BottomLeft />
             </button>
@@ -58,6 +57,6 @@ export default function MainSidebar({ NavbarRooms, NavbarUsers }) {
                 </div>
                 {currentNavbar === "rooms" ? NavbarRooms : currentNavbar === "users" ? NavbarUsers : <NavbarLogout />}
             </aside>
-        </PresenceProvider>
+        </>
     );
 }
