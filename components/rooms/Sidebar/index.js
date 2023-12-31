@@ -3,26 +3,21 @@
 import { createRoomMembership, deleteRoomMembership } from "@/actions/rooms";
 import AsyncButton from "@/components/general/AsyncButton";
 import useAuthContext from "@/providers/AuthProvider";
-import usePresenceContext from "@/providers/PresenceProvider";
 import { useState } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import DeleteRoom from "./DeleteRoom";
-import MembersList from "./MembersList";
+import MembersContainer from "./MembersContainer";
 import UpdateRoom from "./UpdateRoom";
 import css from "./index.module.css";
 
 export default function Sidebar({ room }) {
     const { user } = useAuthContext();
-    const { loggedUsers } = usePresenceContext();
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     function toggleSidebar() {
         setSidebarOpen(!sidebarOpen);
     }
-
-    const onlineMembers = room.members.filter((user) => loggedUsers.includes(user.id));
-    const offlineMembers = room.members.filter((user) => !loggedUsers.includes(user.id));
 
     return (
         <>
@@ -54,30 +49,13 @@ export default function Sidebar({ room }) {
                             loadingContent="Joining..."
                         />
                     ))}
-                <div className={css.members}>
-                    {onlineMembers.length > 0 && (
-                        <>
-                            <h5 className={css["members-heading"]}>Online Members ({onlineMembers.length})</h5>
-                            <MembersList
-                                roomId={room.id}
-                                members={onlineMembers}
-                                roomAdmin={room.admin}
-                                isAdmin={room.isAdmin}
-                            />
-                        </>
-                    )}
-                    {offlineMembers.length > 0 && (
-                        <>
-                            <h5 className={css["members-heading"]}>Offline Members</h5>
-                            <MembersList
-                                roomId={room.id}
-                                members={offlineMembers}
-                                roomAdmin={room.admin}
-                                isAdmin={room.isAdmin}
-                            />
-                        </>
-                    )}
-                </div>
+                <MembersContainer
+                    members={room.members}
+                    roomId={room.id}
+                    isAdmin={room.isAdmin}
+                    roomAdmin={room.admin}
+                    isAccepted={room.isAccepted}
+                />
             </div>
         </>
     );

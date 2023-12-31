@@ -33,10 +33,7 @@
 }
 
 .leave,
-.kick,
-.join,
-.accept,
-.reject {
+.join {
     border: none;
     width: 100%;
     padding: 10px 20px;
@@ -47,46 +44,27 @@
 }
 
 .leave:disabled,
-.kick:disabled,
-.join:disabled,
-.accept:disabled,
-.reject:disabled {
+.join:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-.join,
-.accept {
+.join {
     color: white;
     background-color: rgb(90, 150, 135);
 }
 
-.join:hover,
-.accept:hover {
+.join:hover {
     background-color: rgb(114, 174, 160);
 }
 
-.leave,
-.kick,
-.reject {
+.leave {
     color: white;
     background-color: rgb(179, 115, 86);
 }
 
-.leave:hover,
-.kick:hover,
-.reject:hover {
+.leave:hover {
     background-color: rgb(204, 140, 111);
-}
-
-.members {
-    margin-top: 20px;
-    flex: 1;
-    overflow-y: auto;
-}
-
-.members-heading {
-    margin-bottom: 15px;
 }
 
 @media (max-width: 900px) {
