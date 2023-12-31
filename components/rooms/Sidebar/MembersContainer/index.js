@@ -5,9 +5,9 @@ import css from "./index.module.css";
 export default function MembersContainer({ members, roomId, isAdmin, isAccepted, roomAdmin }) {
     const { loggedUsers } = usePresenceContext();
 
-    const onlineMembers = isAccepted ? members.filter((user) => loggedUsers.includes(user.id)) : [];
+    const onlineMembers = isAdmin || isAccepted ? members.filter((user) => loggedUsers.includes(user.id)) : [];
 
-    const offlineMembers = isAccepted ? members.filter((user) => !loggedUsers.includes(user.id)) : [];
+    const offlineMembers = isAdmin || isAccepted ? members.filter((user) => !loggedUsers.includes(user.id)) : [];
 
     if (roomAdmin)
         if (loggedUsers.includes(roomAdmin.id)) onlineMembers.unshift(roomAdmin);
@@ -19,7 +19,7 @@ export default function MembersContainer({ members, roomId, isAdmin, isAccepted,
                 {onlineMembers.length > 0 && (
                     <>
                         <h5 className={css["members-heading"]}>
-                            Online Members{isAccepted && ` (${onlineMembers.length})`}
+                            Online Members{(isAdmin || isAccepted) && ` (${onlineMembers.length})`}
                         </h5>
                         <MembersList
                             roomId={roomId}
