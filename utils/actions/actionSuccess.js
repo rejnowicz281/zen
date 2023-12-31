@@ -1,9 +1,5 @@
-export default function actionSuccess(actionName, additionalData = {}) {
-    const data = {
-        action: actionName,
-        success: true,
-        ...additionalData,
-    };
-    console.log(data);
-    return data;
+import actionResponse from "./actionResponse";
+
+export default function actionSuccess(actionName, additionalData = {}, redirectPath = null) {
+    return actionResponse(false, actionName, additionalData, redirectPath);
 }

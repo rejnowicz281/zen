@@ -1,9 +1,3 @@
-export default function actionError(actionName, additionalData = {}) {
-    const data = {
-        action: actionName,
-        success: false,
-        ...additionalData,
-    };
-    console.error(data);
-    return data;
+export default function actionError(actionName, additionalData = {}, redirectPath = null) {
+    return actionResponse(false, actionName, additionalData, redirectPath);
 }
