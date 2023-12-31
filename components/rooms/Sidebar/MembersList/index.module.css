@@ -7,3 +7,42 @@
 .member-container:last-child {
     margin-bottom: 0;
 }
+
+.kick,
+.accept,
+.reject {
+    border: none;
+    width: 100%;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: 0.1s;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+
+.kick:disabled,
+.accept:disabled,
+.reject:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.accept {
+    color: white;
+    background-color: rgb(90, 150, 135);
+}
+
+.accept:hover {
+    background-color: rgb(114, 174, 160);
+}
+
+.kick,
+.reject {
+    color: white;
+    background-color: rgb(179, 115, 86);
+}
+
+.kick:hover,
+.reject:hover {
+    background-color: rgb(204, 140, 111);
+}
