@@ -12,11 +12,11 @@ export default function LoginContainer() {
             <form action={signIn}>
                 <div className={cssAuth["form-field"]}>
                     <label htmlFor="email">Email</label>
-                    <input type="email" id="email" placeholder="Enter your email" />
+                    <input type="email" name="email" id="email" placeholder="Enter your email" />
                 </div>
                 <div className={cssAuth["form-field"]}>
                     <label htmlFor="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password" />
+                    <input type="password" id="password" name="password" placeholder="Enter your password" />
                 </div>
                 <SubmitButton className={cssAuth.continue} content="Continue" loading="Proceeding..." />
             </form>
