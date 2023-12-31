@@ -1,4 +1,5 @@
 import { getUserInfo } from "@/actions/users";
+import DeleteUserButton from "@/components/auth/DeleteUserButton";
 import UserBox from "@/components/general/UserBox";
 import Link from "next/link";
 import css from "./page.module.css";
@@ -18,6 +19,7 @@ export default async function UserPage({ params: { id } }) {
             <div className={css["user-wrapper"]}>
                 <UserBox user={userInfo} />
             </div>
+            <DeleteUserButton id={id} />
             <h2 className={css.heading}>User Rooms</h2>
             {userInfo.adminRooms.length > 0 || userInfo.memberRooms.length > 0 ? (
                 <>

@@ -1,5 +1,7 @@
 "use server";
 
+import actionError from "@/utils/actions/actionError";
+import actionSuccess from "@/utils/actions/actionSuccess";
 import { createClient } from "@/utils/supabase/server";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -18,7 +20,7 @@ export async function signIn(formData) {
 
     if (error) return redirect("/login?message=Invalid Email or Password");
 
-    return redirect("/");
+    return actionSuccess("signIn", {}, "/");
 }
 
 export async function signUp(formData) {
@@ -69,7 +71,7 @@ export async function signUp(formData) {
 
     if (error) return redirect(`/register?message=${error.message}`);
 
-    return redirect("/");
+    return actionSuccess("signUp", {}, "/");
 }
 
 export async function githubSignIn() {
@@ -86,7 +88,7 @@ export async function githubSignIn() {
 
     if (error) return redirect("/login?message=Could not authenticate user");
 
-    return redirect(data.url);
+    return actionSuccess("githubSignIn", {}, data.url);
 }
 
 export async function googleSignIn() {
@@ -103,7 +105,7 @@ export async function googleSignIn() {
 
     if (error) return redirect("/login?message=Could not authenticate user");
 
-    return redirect(data.url);
+    return actionSuccess("googleSignIn", {}, data.url);
 }
 
 export async function demoLogin() {
@@ -117,7 +119,7 @@ export async function demoLogin() {
 
     if (error) return redirect("/login?message=Could not authenticate user");
 
-    return redirect("/");
+    return actionSuccess("demoLogin", {}, "/");
 }
 
 export async function signOut() {
@@ -125,5 +127,18 @@ export async function signOut() {
     const supabase = createClient(cookieStore);
     await supabase.auth.signOut();
 
-    return redirect("/login");
+    return actionSuccess("signOut", {}, "/login");
+}
+
+export async function deleteUser(id) {
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+
+    const { data: user, error } = await supabase.from("users").delete().eq("id", id);
+
+    if (error) return actionError("deleteUser", { error });
+
+    await supabase.auth.signOut();
+
+    return actionSuccess("deleteUser", { id }, "/login");
 }
