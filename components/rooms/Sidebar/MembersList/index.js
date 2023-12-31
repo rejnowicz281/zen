@@ -3,7 +3,7 @@ import AsyncButton from "@/components/general/AsyncButton";
 import UserBox from "@/components/general/UserBox";
 import css from "./index.module.css";
 
-export default function MembersList({ members, roomAdmin, isAdmin }) {
+export default function MembersList({ members, roomId, roomAdmin, isAdmin }) {
     return (
         <>
             {roomAdmin && (
@@ -19,13 +19,13 @@ export default function MembersList({ members, roomAdmin, isAdmin }) {
                             <UserBox user={member} />
                             <AsyncButton
                                 className={css.accept}
-                                mainAction={() => updateRoomMembership(room.id, member.id, true)}
+                                mainAction={() => updateRoomMembership(roomId, member.id, true)}
                                 content="Accept"
                                 loadingContent="Accepting..."
                             />
                             <AsyncButton
                                 className={css.reject}
-                                mainAction={() => deleteRoomMembership(room.id, member.id)}
+                                mainAction={() => deleteRoomMembership(roomId, member.id)}
                                 content="Reject"
                                 loadingContent="Rejecting..."
                             />
@@ -39,7 +39,7 @@ export default function MembersList({ members, roomAdmin, isAdmin }) {
                         {isAdmin && member.id !== roomAdmin?.id && (
                             <AsyncButton
                                 className={css.kick}
-                                mainAction={() => deleteRoomMembership(room.id, member.id)}
+                                mainAction={() => deleteRoomMembership(roomId, member.id)}
                                 content="Kick"
                                 loadingContent="Kicking..."
                             />

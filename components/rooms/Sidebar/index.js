@@ -58,13 +58,23 @@ export default function Sidebar({ room }) {
                     {onlineMembers.length > 0 && (
                         <>
                             <h5 className={css["members-heading"]}>Online Members ({onlineMembers.length})</h5>
-                            <MembersList members={onlineMembers} roomAdmin={room.admin} isAdmin={room.isAdmin} />
+                            <MembersList
+                                roomId={room.id}
+                                members={onlineMembers}
+                                roomAdmin={room.admin}
+                                isAdmin={room.isAdmin}
+                            />
                         </>
                     )}
                     {offlineMembers.length > 0 && (
                         <>
                             <h5 className={css["members-heading"]}>Offline Members</h5>
-                            <MembersList members={offlineMembers} roomAdmin={room.admin} isAdmin={room.isAdmin} />
+                            <MembersList
+                                roomId={room.id}
+                                members={offlineMembers}
+                                roomAdmin={room.admin}
+                                isAdmin={room.isAdmin}
+                            />
                         </>
                     )}
                 </div>
