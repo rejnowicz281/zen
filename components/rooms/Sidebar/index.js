@@ -5,7 +5,7 @@ import AsyncButton from "@/components/general/AsyncButton";
 import useAuthContext from "@/providers/AuthProvider";
 import { useState } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import DeleteRoom from "./DeleteRoom";
+import DeleteRoomButton from "./DeleteRoomButton";
 import MembersContainer from "./MembersContainer";
 import UpdateRoom from "./UpdateRoom";
 import css from "./index.module.css";
@@ -30,7 +30,7 @@ export default function Sidebar({ room }) {
                     {!room.public && <p className={css.private}>This room is private.</p>}
                     {room.isAdmin && (
                         <>
-                            <DeleteRoom id={room.id} />
+                            <DeleteRoomButton id={room.id} />
                             <UpdateRoom id={room.id} name={room.name} isPublic={room.public} />
                         </>
                     )}

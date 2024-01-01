@@ -2,6 +2,7 @@ import MainSidebar from "@/components/general/MainSidebar";
 import NavbarRooms from "@/components/navbars/NavbarRooms";
 import NavbarUsers from "@/components/navbars/NavbarUsers";
 import { AuthProvider } from "@/providers/AuthProvider";
+import { ModalProvider } from "@/providers/ModalContext";
 import { PresenceProvider } from "@/providers/PresenceProvider";
 import RealTimeRoomsProvider from "@/providers/RealTimeRoomsProvider";
 import { createClient } from "@/utils/supabase/server";
@@ -20,10 +21,12 @@ export default async function DashboardLayout({ children }) {
         <AuthProvider user={user}>
             <RealTimeRoomsProvider>
                 <PresenceProvider>
-                    <div className={css.container}>
-                        <MainSidebar NavbarRooms={<NavbarRooms />} NavbarUsers={<NavbarUsers />} />
-                        <main className={css.main}>{children}</main>
-                    </div>
+                    <ModalProvider>
+                        <div className={css.container}>
+                            <MainSidebar NavbarRooms={<NavbarRooms />} NavbarUsers={<NavbarUsers />} />
+                            <main className={css.main}>{children}</main>
+                        </div>
+                    </ModalProvider>
                 </PresenceProvider>
             </RealTimeRoomsProvider>
         </AuthProvider>

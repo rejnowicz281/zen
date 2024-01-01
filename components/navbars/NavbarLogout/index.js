@@ -1,13 +1,17 @@
-import { signOut } from "@/actions/auth";
-import SubmitButton from "@/components/general/SubmitButton";
+import useModalContext from "@/providers/ModalContext";
 import cssNavbar from "../index.module.css";
+import Logout from "./Logout";
 
 export default function NavbarLogout() {
+    const { setModalContent } = useModalContext();
+
     return (
-        <form action={signOut} className={cssNavbar.container}>
+        <div className={cssNavbar.container}>
             <div className={cssNavbar["main-buttons"]}>
-                <SubmitButton className={cssNavbar["main-button"]} content="Logout" loading="Logging out..." />
+                <button onClick={() => setModalContent(<Logout />)} className={cssNavbar["main-button"]}>
+                    Logout
+                </button>
             </div>
-        </form>
+        </div>
     );
 }

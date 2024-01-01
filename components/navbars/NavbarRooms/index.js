@@ -1,6 +1,7 @@
 import { getRooms } from "@/actions/rooms";
 import NavLink from "@/components/general/NavLink";
 import cssNavbar from "../index.module.css";
+import CreateNewRoomButton from "./CreateNewRoomButton";
 import cssNavbarRooms from "./index.module.css";
 
 export default async function NavbarRooms() {
@@ -9,9 +10,7 @@ export default async function NavbarRooms() {
     return (
         <nav className={cssNavbar.container}>
             <div className={cssNavbar["main-buttons"]}>
-                <NavLink className={cssNavbar["main-button"]} activeClassName={cssNavbar.active} href="/rooms/new">
-                    Create New Room
-                </NavLink>
+                <CreateNewRoomButton />
             </div>
             {rooms && (
                 <div className={cssNavbar["list-wrapper"]}>

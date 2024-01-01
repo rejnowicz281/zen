@@ -2,22 +2,27 @@
 
 import { createRoom } from "@/actions/rooms";
 import SubmitButton from "@/components/general/SubmitButton";
-import { useRef } from "react";
+import useModalContext from "@/providers/ModalContext";
+import { useRouter } from "next/navigation";
 import css from "./index.module.css";
 
 export default function CreateRoom() {
-    const formRef = useRef(null);
+    const router = useRouter();
+    const { closeModal } = useModalContext();
 
     async function handleAction(formData) {
         if (!formData.get("name")) return;
 
         const res = await createRoom(formData);
 
-        if (res.success) formRef.current.reset();
+        if (res.success) {
+            closeModal();
+            router.push(`/rooms/${res.id}`);
+        }
     }
 
     return (
-        <form action={handleAction} ref={formRef} className={css.form}>
+        <form action={handleAction} className={css.form}>
             <input placeholder="Name goes here..." type="text" name="name" className={css.name} />
             <div className={css["checkbox-container"]}>
                 <input type="checkbox" id="public" name="public" defaultChecked />

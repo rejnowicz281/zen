@@ -71,11 +71,14 @@ export async function createRoom(formData) {
     const name = formData.get("name");
     const is_public = formData.get("public") === "on";
 
-    const { data: room, error } = await supabase.from("rooms").insert([{ name, admin_id: user.id, public: is_public }]);
+    const { data: room, error } = await supabase
+        .from("rooms")
+        .insert([{ name, admin_id: user.id, public: is_public }])
+        .select("id");
 
     if (error) return actionError("createRoom", { error });
 
-    return actionSuccess("createRoom", { name });
+    return actionSuccess("createRoom", { id: room[0].id, name });
 }
 
 export async function updateRoom(id, name, is_public) {
