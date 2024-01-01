@@ -5,6 +5,23 @@ import actionSuccess from "@/utils/actions/actionSuccess";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
+export async function getRandomRoomId() {
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+
+    const { data: rooms, error } = await supabase.from("rooms").select("id");
+
+    if (error) return actionError("getRandomRoomId", { error });
+
+    if (!rooms.length) return null;
+
+    const ids = rooms.map((room) => room.id);
+
+    const randomId = ids[Math.floor(Math.random() * ids.length)];
+
+    return randomId;
+}
+
 export async function getRooms() {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
