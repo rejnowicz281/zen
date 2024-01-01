@@ -1,6 +1,7 @@
 "use client";
 
 import { deleteMessage } from "@/actions/messages";
+import AsyncButton from "@/components/general/AsyncButton";
 import UserBox from "@/components/general/UserBox";
 import useAuthContext from "@/providers/AuthProvider";
 import formatMessageDate from "@/utils/general/formatMessageDate";
@@ -8,7 +9,7 @@ import { useEffect, useRef } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
 import css from "./index.module.css";
 
-export default function MessagesList({ messages, isAdmin, isAccepted, roomIsPublic, deleteOptimisticMessage }) {
+export default function MessagesList({ messages, isAdmin, isAccepted, roomIsPublic }) {
     const { user } = useAuthContext();
 
     const messagesRef = useRef(null);
@@ -52,20 +53,12 @@ export default function MessagesList({ messages, isAdmin, isAccepted, roomIsPubl
                                 ) : (
                                     !message.deleted &&
                                     (isAdmin || message.user.id === user.id) && (
-                                        <form
-                                            action={(formData) => {
-                                                const id = formData.get("id");
-                                                if (!id) return;
-
-                                                deleteOptimisticMessage(id);
-                                                deleteMessage(id);
-                                            }}
-                                        >
-                                            <input type="hidden" name="id" value={message.id} />
-                                            <button type="submit" className={css.delete}>
-                                                Delete Message
-                                            </button>
-                                        </form>
+                                        <AsyncButton
+                                            className={css.delete}
+                                            mainAction={() => deleteMessage(message.id)}
+                                            content="Delete Message"
+                                            loadingContent="Deleting..."
+                                        />
                                     )
                                 )}
                                 <div className={css.content}>

@@ -10,7 +10,7 @@ export default function MessagesContainer({ messages, roomId, isAdmin, isAccepte
     const [optimisticMessages, setOptimisticMessages] = useOptimistic(messages);
 
     useEffect(() => {
-        // Ensure that other user's messages are also updated
+        // Ensure that the optimistic messages are always up to date
         startTransition(() => setOptimisticMessages(messages));
     }, [messages]);
 
@@ -18,15 +18,10 @@ export default function MessagesContainer({ messages, roomId, isAdmin, isAccepte
         setOptimisticMessages([...optimisticMessages, message]);
     }
 
-    function deleteOptimisticMessage(id) {
-        setOptimisticMessages(optimisticMessages.filter((message) => message.id !== id));
-    }
-
     return (
         <div className={css.wrapper}>
             <div className={css.container}>
                 <MessagesList
-                    deleteOptimisticMessage={deleteOptimisticMessage}
                     messages={optimisticMessages}
                     isAdmin={isAdmin}
                     isAccepted={isAccepted}
