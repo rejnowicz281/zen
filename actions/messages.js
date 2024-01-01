@@ -20,10 +20,6 @@ export async function createMessage(formData) {
     const bucket = supabase.storage.from("messages_images");
     const fileName = `room_${room_id}/message_${Date.now()}`;
 
-    const { data: image, imageError } = await bucket.upload(fileName, imageFile);
-
-    if (imageError) return actionError("createMessage", { imageError });
-
     const image_url = imageFile.type.startsWith("image/") ? bucket.getPublicUrl(fileName).data.publicUrl : null;
 
     const { data: message, messageError } = await supabase
@@ -31,6 +27,10 @@ export async function createMessage(formData) {
         .insert([{ text, user_id: user.id, room_id, image_url }]);
 
     if (messageError) return actionError("createMessage", { messageError });
+
+    const { data: image, imageError } = await bucket.upload(fileName, imageFile);
+
+    if (imageError) return actionError("createMessage", { imageError });
 
     return actionSuccess("createMessage", { text });
 }
