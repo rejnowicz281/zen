@@ -4,8 +4,6 @@ import UserBox from "@/components/general/UserBox";
 import Link from "next/link";
 import css from "./page.module.css";
 
-export const dynamic = "force-dynamic";
-
 export default async function UserPage({ params: { id } }) {
     const userInfo = await getUserInfo(id);
 
