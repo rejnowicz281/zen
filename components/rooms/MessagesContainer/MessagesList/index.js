@@ -3,6 +3,7 @@
 import { deleteMessage } from "@/actions/messages";
 import UserBox from "@/components/general/UserBox";
 import useAuthContext from "@/providers/AuthProvider";
+import formatMessageDate from "@/utils/general/formatMessageDate";
 import { useEffect, useRef } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
 import css from "./index.module.css";
@@ -35,7 +36,14 @@ export default function MessagesList({ messages, isAdmin, isAccepted, roomIsPubl
                     messages.length > 0 ? (
                         messages.map((message) => (
                             <div className={css.message} key={message.id}>
-                                <UserBox user={message.user} />
+                                <div className={css["message-top"]}>
+                                    <UserBox user={message.user} />
+                                    {message.created_at && (
+                                        <div className={css["message-date"]}>
+                                            {formatMessageDate(message.created_at)}
+                                        </div>
+                                    )}
+                                </div>
                                 {message.loading ? (
                                     <div className={css["message-loading"]}>
                                         Message is being sent...{" "}
