@@ -36,15 +36,19 @@
     margin-top: 30px;
 }
 
-.delete {
+.delete,
+.message-loading {
     margin-left: 60px;
-    color: rgb(255, 78, 78);
     border: none;
     background-color: inherit;
-    cursor: pointer;
     padding: 0;
     display: block;
     margin-bottom: 10px;
+}
+
+.delete {
+    color: rgb(255, 78, 78);
+    cursor: pointer;
 }
 
 .delete:hover {
@@ -57,6 +61,20 @@
 
 .image {
     max-width: 100%;
+}
+
+.message-loading-spin {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @media (max-height: 550px) {

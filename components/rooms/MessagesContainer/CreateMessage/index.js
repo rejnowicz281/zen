@@ -2,20 +2,29 @@
 
 import { createMessage } from "@/actions/messages";
 import ImagePicker from "@/components/general/ImagePicker";
-import SubmitButton from "@/components/general/SubmitButton";
+import useAuthContext from "@/providers/AuthProvider";
 import { useRef } from "react";
-import { AiOutlineLoading, AiOutlineSend } from "react-icons/ai";
+import { AiOutlineSend } from "react-icons/ai";
 import css from "./index.module.css";
 
-export default function CreateMessage({ roomId }) {
+export default function CreateMessage({ roomId, addOptimisticMessage }) {
     const formRef = useRef(null);
+    const { user } = useAuthContext();
 
-    async function handleAction(formData) {
+    function handleAction(formData) {
         if (!formData.get("text")) return;
+        formRef.current.reset();
 
-        const res = await createMessage(formData);
+        const optimisticMessage = {
+            id: Math.random(),
+            text: formData.get("text"),
+            user,
+            loading: true,
+        };
 
-        if (res.success) formRef.current.reset();
+        addOptimisticMessage(optimisticMessage);
+
+        createMessage(formData);
     }
 
     return (
@@ -27,11 +36,9 @@ export default function CreateMessage({ roomId }) {
             </div>
             <div className={css["input-box"]}>
                 <input placeholder="Type your message here..." className={css.input} type="text" name="text" />
-                <SubmitButton
-                    className={css.submit}
-                    content={<AiOutlineSend />}
-                    loading={<AiOutlineLoading className={css.spin} />}
-                />
+                <button className={css.submit}>
+                    <AiOutlineSend />
+                </button>
             </div>
         </form>
     );
