@@ -5,7 +5,7 @@ import css from "./index.module.css";
 export default function MessagesContainer({ messages, roomId, isAdmin, isAccepted, roomIsPublic }) {
     return (
         <div className={css.container}>
-            {(roomIsPublic || isAccepted || isAdmin) && <MessagesList messages={messages} isAdmin={isAdmin} />}
+            <MessagesList messages={messages} isAdmin={isAdmin} isAccepted={isAccepted} roomIsPublic={roomIsPublic} />
             {(isAdmin || isAccepted) && <CreateMessage roomId={roomId} />}
         </div>
     );

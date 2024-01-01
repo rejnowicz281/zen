@@ -1,11 +1,24 @@
-.container {
-    padding: 100px 50px 50px 50px;
-    display: flex;
-    flex-direction: column;
+.wrapper {
+    position: relative;
     flex: 1;
+    margin-top: 20px;
     transition: 0.3s;
     max-width: 350px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    padding: 100px 50px 50px 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .toggle {
@@ -67,8 +80,8 @@
     background-color: rgb(204, 140, 111);
 }
 
-@media (max-width: 900px) {
-    .container {
+@media (max-width: 1000px) {
+    .wrapper {
         background-color: #191e1f;
         border-left: 1px solid #2c2c2c;
         position: fixed;

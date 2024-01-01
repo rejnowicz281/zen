@@ -2,7 +2,12 @@
     padding: 100px 50px 50px 50px;
     box-sizing: border-box;
     flex: 1;
-    height: 100vh;
     display: flex;
     flex-direction: column;
+}
+
+@media (max-width: 700px) {
+    .container {
+        padding: 100px 20px 20px 20px;
+    }
 }

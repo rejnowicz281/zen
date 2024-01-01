@@ -36,6 +36,7 @@
     padding: 20px 0;
     border-bottom: 1px solid #414141;
     transition: 0.1s;
+    word-break: break-all;
 }
 
 .room-link:hover {

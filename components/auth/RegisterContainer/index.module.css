@@ -3,3 +3,9 @@
     gap: 5px;
     width: 100%;
 }
+
+@media (max-width: 600px) {
+    .double-form-field {
+        flex-direction: column;
+    }
+}

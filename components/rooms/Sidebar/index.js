@@ -24,38 +24,40 @@ export default function Sidebar({ room }) {
             <button onClick={toggleSidebar} className={css.toggle} type="button">
                 <AiOutlineInfoCircle />
             </button>
-            <div className={`${css.container}${sidebarOpen ? ` ${css.open}` : ""}`}>
-                <h1 className={css.heading}>{room.name}</h1>
-                {!room.public && <p className={css.private}>This room is private.</p>}
-                {room.isAdmin && (
-                    <>
-                        <DeleteRoom id={room.id} />
-                        <UpdateRoom id={room.id} name={room.name} isPublic={room.public} />
-                    </>
-                )}
-                {!room.isAdmin &&
-                    (room.isMember ? (
-                        <AsyncButton
-                            className={css.leave}
-                            mainAction={() => deleteRoomMembership(room.id, user.id)}
-                            content={room.isAccepted ? "Leave Room" : "Cancel Join Request"}
-                            loadingContent={room.isAccepted ? "Leaving..." : "Cancelling..."}
-                        />
-                    ) : (
-                        <AsyncButton
-                            className={css.join}
-                            mainAction={() => createRoomMembership(room.id, user.id, room.public)}
-                            content="Join Room"
-                            loadingContent="Joining..."
-                        />
-                    ))}
-                <MembersContainer
-                    members={room.members}
-                    roomId={room.id}
-                    isAdmin={room.isAdmin}
-                    roomAdmin={room.admin}
-                    isAccepted={room.isAccepted}
-                />
+            <div className={`${css.wrapper}${sidebarOpen ? ` ${css.open}` : ""}`}>
+                <div className={css.container}>
+                    <h1 className={css.heading}>{room.name}</h1>
+                    {!room.public && <p className={css.private}>This room is private.</p>}
+                    {room.isAdmin && (
+                        <>
+                            <DeleteRoom id={room.id} />
+                            <UpdateRoom id={room.id} name={room.name} isPublic={room.public} />
+                        </>
+                    )}
+                    {!room.isAdmin &&
+                        (room.isMember ? (
+                            <AsyncButton
+                                className={css.leave}
+                                mainAction={() => deleteRoomMembership(room.id, user.id)}
+                                content={room.isAccepted ? "Leave Room" : "Cancel Join Request"}
+                                loadingContent={room.isAccepted ? "Leaving..." : "Cancelling..."}
+                            />
+                        ) : (
+                            <AsyncButton
+                                className={css.join}
+                                mainAction={() => createRoomMembership(room.id, user.id, room.public)}
+                                content="Join Room"
+                                loadingContent="Joining..."
+                            />
+                        ))}
+                    <MembersContainer
+                        members={room.members}
+                        roomId={room.id}
+                        isAdmin={room.isAdmin}
+                        roomAdmin={room.admin}
+                        isAccepted={room.isAccepted}
+                    />
+                </div>
             </div>
         </>
     );
