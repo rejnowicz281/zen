@@ -16,7 +16,7 @@ function formatTime(date) {
     const hours = date.getHours();
     const minutes = date.getMinutes();
 
-    return `${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
+    return `${singleDigit(hours)}:${singleDigit(minutes)}`;
 }
 
 function formatDate(date) {
@@ -24,5 +24,9 @@ function formatDate(date) {
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
 
-    return `${day}.${month}.${year}`;
+    return `${singleDigit(day)}.${singleDigit(month)}.${year}`;
+}
+
+function singleDigit(number) {
+    return number < 10 ? "0" + number : number;
 }
