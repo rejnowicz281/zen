@@ -54,3 +54,9 @@
     left: 0;
     overflow-y: auto;
 }
+
+@media (max-height: 680px) {
+    .list {
+        overflow-y: inherit;
+    }
+}

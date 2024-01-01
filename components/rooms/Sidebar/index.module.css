@@ -1,7 +1,6 @@
 .wrapper {
     position: relative;
     flex: 1;
-    margin-top: 20px;
     transition: 0.3s;
     max-width: 350px;
     width: 100%;

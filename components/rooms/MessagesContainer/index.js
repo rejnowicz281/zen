@@ -4,9 +4,16 @@ import css from "./index.module.css";
 
 export default function MessagesContainer({ messages, roomId, isAdmin, isAccepted, roomIsPublic }) {
     return (
-        <div className={css.container}>
-            <MessagesList messages={messages} isAdmin={isAdmin} isAccepted={isAccepted} roomIsPublic={roomIsPublic} />
-            {(isAdmin || isAccepted) && <CreateMessage roomId={roomId} />}
+        <div className={css.wrapper}>
+            <div className={css.container}>
+                <MessagesList
+                    messages={messages}
+                    isAdmin={isAdmin}
+                    isAccepted={isAccepted}
+                    roomIsPublic={roomIsPublic}
+                />
+                {(isAdmin || isAccepted) && <CreateMessage roomId={roomId} />}
+            </div>
         </div>
     );
 }

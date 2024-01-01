@@ -28,35 +28,43 @@ export default function MainSidebar({ NavbarRooms, NavbarUsers }) {
             <button onClick={toggleSidebar} className={css.toggle} type="button">
                 <HiMiniBars3BottomLeft />
             </button>
-            <aside className={`${css.container}${open ? ` ${css.open}` : ""}`}>
-                <div className={css["current-user-wrapper"]}>
-                    <UserBox user={user} />
-                </div>
-                <div className={css.buttons}>
-                    <button
-                        id={currentNavbar == "rooms" ? css["active-button"] : undefined}
-                        onClick={() => setCurrentNavbar("rooms")}
-                        type="button"
-                    >
-                        Rooms
-                    </button>
-                    <button
-                        id={currentNavbar == "users" ? css["active-button"] : undefined}
-                        onClick={() => setCurrentNavbar("users")}
-                        type="button"
-                    >
-                        Users
-                    </button>
-                    <button
-                        id={currentNavbar == "logout" ? css["active-button"] : undefined}
-                        onClick={() => setCurrentNavbar("logout")}
-                        type="button"
-                    >
-                        Logout
-                    </button>
-                </div>
-                {currentNavbar === "rooms" ? NavbarRooms : currentNavbar === "users" ? NavbarUsers : <NavbarLogout />}
-            </aside>
+            <div className={`${css.wrapper}${open ? ` ${css.open}` : ""}`}>
+                <aside className={css.container}>
+                    <div className={css["current-user-wrapper"]}>
+                        <UserBox user={user} />
+                    </div>
+                    <div className={css.buttons}>
+                        <button
+                            id={currentNavbar == "rooms" ? css["active-button"] : undefined}
+                            onClick={() => setCurrentNavbar("rooms")}
+                            type="button"
+                        >
+                            Rooms
+                        </button>
+                        <button
+                            id={currentNavbar == "users" ? css["active-button"] : undefined}
+                            onClick={() => setCurrentNavbar("users")}
+                            type="button"
+                        >
+                            Users
+                        </button>
+                        <button
+                            id={currentNavbar == "logout" ? css["active-button"] : undefined}
+                            onClick={() => setCurrentNavbar("logout")}
+                            type="button"
+                        >
+                            Logout
+                        </button>
+                    </div>
+                    {currentNavbar === "rooms" ? (
+                        NavbarRooms
+                    ) : currentNavbar === "users" ? (
+                        NavbarUsers
+                    ) : (
+                        <NavbarLogout />
+                    )}
+                </aside>
+            </div>
         </>
     );
 }

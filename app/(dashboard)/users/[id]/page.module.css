@@ -4,6 +4,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 .user-wrapper {
@@ -26,14 +27,15 @@
     right: 0;
     bottom: 0;
     left: 0;
-    overflow: auto;
+    overflow-y: auto;
 }
 
 .room-link {
     color: inherit;
     display: block;
     text-decoration: none;
-    padding: 20px 0;
+    padding: 12px 0;
+    margin: 12px 0;
     border-bottom: 1px solid #414141;
     transition: 0.1s;
     word-break: break-all;
@@ -66,4 +68,14 @@
     font-size: 18px;
     padding: 0 10px;
     font-weight: bold;
+}
+
+@media (max-height: 550px) {
+    .room-list {
+        overflow-y: inherit;
+    }
+    .container {
+        padding-left: 70px;
+        padding-right: 70px;
+    }
 }

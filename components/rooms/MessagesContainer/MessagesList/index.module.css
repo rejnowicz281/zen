@@ -1,10 +1,22 @@
-.container {
-    flex: 1;
+.wrapper {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    position: relative;
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
     overflow-y: auto;
     padding-bottom: 30px;
     word-break: break-all;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .not-accepted,
@@ -45,4 +57,11 @@
 
 .image {
     max-width: 100%;
+}
+
+@media (max-height: 550px) {
+    .container {
+        overflow-y: inherit;
+        position: relative;
+    }
 }
