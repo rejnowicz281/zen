@@ -6,7 +6,7 @@ export default function Home() {
         <div className={css.container}>
             <h1 className={css.heading}>Welcome to zen.</h1>
             <li className={css["link-wrapper"]}>
-                <ProfileLink />
+                <ProfileLink text="Have fun!" />
             </li>
         </div>
     );

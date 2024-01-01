@@ -3,8 +3,8 @@
 import useAuthContext from "@/providers/AuthProvider";
 import Link from "next/link";
 
-export default function ProfileLink() {
+export default function ProfileLink({ text }) {
     const { user } = useAuthContext();
 
-    return <Link href={`/users/${user.id}`}>Go to your profile</Link>;
+    return <Link href={`/users/${user.id}`}>{text}</Link>;
 }
