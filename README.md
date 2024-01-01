@@ -17,4 +17,4 @@ zen is a simple chat application built with NextJS 14. It utilizes supabase for 
 
 ## To Do
 
--   [ ] Friendships between users
+-   [ ] Add modal for confirming dangerous actions
