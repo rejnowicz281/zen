@@ -4,7 +4,6 @@ import actionError from "@/utils/actions/actionError";
 import actionSuccess from "@/utils/actions/actionSuccess";
 import { createClient } from "@/utils/supabase/server";
 import { cookies, headers } from "next/headers";
-import { redirect } from "next/navigation";
 
 export async function signIn(formData) {
     const email = formData.get("email");
@@ -18,7 +17,7 @@ export async function signIn(formData) {
         password,
     });
 
-    if (error) return redirect("/login?message=Invalid Email or Password");
+    if (error) return actionError("signIn", {}, "/login?message=Invalid Email or Password");
 
     return actionSuccess("signIn", {}, "/");
 }
@@ -44,14 +43,10 @@ export async function signUp(formData) {
     if (!passwordConfirm) queryParams.append("message", "Password confirmation is required");
     if (password !== passwordConfirm) queryParams.append("message", "Passwords do not match");
 
-    if (queryParams.toString()) return redirect(`/register?${queryParams.toString()}`);
+    if (queryParams.toString()) return actionError("signUp", {}, `/register?${queryParams.toString()}`);
 
     const bucket = supabase.storage.from("avatars");
     const fileName = `${Date.now()}`;
-
-    const { data: avatar, avatarError } = await bucket.upload(fileName, avatarFile);
-
-    if (avatarError) return actionError("signUp", { avatarError });
 
     const avatar_url = avatarFile.type.startsWith("image/")
         ? bucket.getPublicUrl(fileName).data.publicUrl
@@ -69,7 +64,11 @@ export async function signUp(formData) {
         },
     });
 
-    if (error) return redirect(`/register?message=${error.message}`);
+    if (error) return actionError("signUp", { error }, `/register?message=${error.message}`);
+
+    const { data: avatar, avatarError } = await bucket.upload(fileName, avatarFile);
+
+    if (avatarError) return actionError("signUp", { avatarError });
 
     return actionSuccess("signUp", {}, "/");
 }
@@ -86,7 +85,7 @@ export async function githubSignIn() {
         },
     });
 
-    if (error) return redirect("/login?message=Could not authenticate user");
+    if (error) return actionError("githubSignIn", {}, "/login?message=Could not authenticate user");
 
     return actionSuccess("githubSignIn", {}, data.url);
 }
@@ -103,7 +102,7 @@ export async function googleSignIn() {
         },
     });
 
-    if (error) return redirect("/login?message=Could not authenticate user");
+    if (error) return actionError("googleSignIn", {}, "/login?message=Could not authenticate user");
 
     return actionSuccess("googleSignIn", {}, data.url);
 }
@@ -117,7 +116,7 @@ export async function demoLogin() {
         password: "123456",
     });
 
-    if (error) return redirect("/login?message=Could not authenticate user");
+    if (error) return actionError("demoLogin", {}, "/login?message=Could not authenticate user");
 
     return actionSuccess("demoLogin", {}, "/");
 }
