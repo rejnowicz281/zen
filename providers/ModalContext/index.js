@@ -6,17 +6,35 @@ import { createContext, useContext, useState } from "react";
 export const ModalContext = createContext();
 
 export function ModalProvider({ children }) {
-    const [modalContent, setModalContent] = useState(null);
+    const [modalData, setModalData] = useState({ content: null, className: null });
 
     function closeModal() {
-        setModalContent(null);
+        setModalData({ content: null, className: null });
     }
+
+    function setModal(content, className) {
+        setModalData({ content, className });
+    }
+
+    function setModalContent(content) {
+        setModalData({ ...modalData, content });
+    }
+
+    function setModalClassName(className) {
+        setModalData({ ...modalData, className });
+    }
+
+    const modalContent = modalData.content;
+    const modalClassName = modalData.className;
 
     return (
         <ModalContext.Provider
             value={{
-                modalContent,
                 setModalContent,
+                setModalClassName,
+                modalContent,
+                modalClassName,
+                setModal,
                 closeModal,
             }}
         >

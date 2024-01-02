@@ -4,13 +4,16 @@ import { deleteMessage } from "@/actions/messages";
 import AsyncButton from "@/components/general/AsyncButton";
 import UserBox from "@/components/general/UserBox";
 import useAuthContext from "@/providers/AuthProvider";
+import useModalContext from "@/providers/ModalContext";
 import formatMessageDate from "@/utils/general/formatMessageDate";
 import { useEffect, useRef } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
+import ModalImage from "./ModalImage";
 import css from "./index.module.css";
 
 export default function MessagesList({ messages, isAdmin, isAccepted, roomIsPublic }) {
     const { user } = useAuthContext();
+    const { setModal } = useModalContext();
 
     const messagesRef = useRef(null);
     const previousMessageCount = useRef(0);
@@ -67,7 +70,18 @@ export default function MessagesList({ messages, isAdmin, isAccepted, roomIsPubl
                                     ) : (
                                         <>
                                             <div>{message.text}</div>
-                                            {message.image_url && <img className={css.image} src={message.image_url} />}
+                                            {message.image_url && (
+                                                <img
+                                                    onClick={() =>
+                                                        setModal(
+                                                            <ModalImage src={message.image_url} />,
+                                                            css["modal-image"]
+                                                        )
+                                                    }
+                                                    className={css.image}
+                                                    src={message.image_url}
+                                                />
+                                            )}
                                         </>
                                     )}
                                 </div>
