@@ -1,5 +1,5 @@
 import { deleteRoomMembership, updateRoomMembership } from "@/actions/rooms";
-import AsyncButton from "@/components/general/AsyncButton";
+import SubmitButton from "@/components/general/SubmitButton";
 import UserBox from "@/components/general/UserBox";
 import css from "./index.module.css";
 
@@ -21,28 +21,26 @@ export default function MembersList({ members, roomId, isAdmin, adminId }) {
         <div className={css["member-container"]} key={member.id}>
             <UserBox user={member} tag={member.id === adminId ? "Admin" : null} />
             {isAdmin && member.id !== adminId && member.accepted && (
-                <AsyncButton
-                    className={css.kick}
-                    mainAction={() => deleteRoomMembership(roomId, member.id)}
-                    content="Kick"
-                    loadingContent="Kicking..."
-                />
+                <form action={deleteRoomMembership}>
+                    <input type="hidden" name="user_id" value={member.id} />
+                    <input type="hidden" name="room_id" value={roomId} />
+                    <SubmitButton className={css.kick} content="Kick" loading="Kicking..." />
+                </form>
             )}
             {!member.accepted && isAdmin && member.id !== adminId && (
-                <AsyncButton
-                    className={css.accept}
-                    mainAction={() => updateRoomMembership(roomId, member.id, true)}
-                    content="Accept"
-                    loadingContent="Accepting..."
-                />
+                <form action={updateRoomMembership}>
+                    <input type="hidden" name="user_id" value={member.id} />
+                    <input type="hidden" name="room_id" value={roomId} />
+                    <input type="hidden" name="accepted" value={true} />
+                    <SubmitButton className={css.accept} content="Accept" loading="Accepting..." />
+                </form>
             )}
             {!member.accepted && isAdmin && member.id !== adminId && (
-                <AsyncButton
-                    className={css.reject}
-                    mainAction={() => deleteRoomMembership(roomId, member.id)}
-                    content="Reject"
-                    loadingContent="Rejecting..."
-                />
+                <form action={deleteRoomMembership}>
+                    <input type="hidden" name="user_id" value={member.id} />
+                    <input type="hidden" name="room_id" value={roomId} />
+                    <SubmitButton className={css.reject} content="Reject" loading="Rejecting..." />
+                </form>
             )}
         </div>
     ));

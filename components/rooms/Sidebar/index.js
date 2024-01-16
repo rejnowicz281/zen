@@ -1,7 +1,7 @@
 "use client";
 
 import { createRoomMembership, deleteRoomMembership } from "@/actions/rooms";
-import AsyncButton from "@/components/general/AsyncButton";
+import SubmitButton from "@/components/general/SubmitButton";
 import useAuthContext from "@/providers/AuthProvider";
 import { useState } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
@@ -19,6 +19,12 @@ export default function Sidebar({ room }) {
         setSidebarOpen(!sidebarOpen);
     }
 
+    async function handleCreateRoomMembership(formData) {
+        formData.append("accepted", room.public);
+
+        await createRoomMembership(formData);
+    }
+
     return (
         <>
             <button onClick={toggleSidebar} className={css.toggle} type="button">
@@ -31,24 +37,26 @@ export default function Sidebar({ room }) {
                     {room.isAdmin && (
                         <>
                             <DeleteRoomButton id={room.id} />
-                            <UpdateRoom id={room.id} name={room.name} isPublic={room.public} />
+                            <UpdateRoom id={room.id} isPublic={room.public} />
                         </>
                     )}
                     {!room.isAdmin &&
                         (room.isMember ? (
-                            <AsyncButton
-                                className={css.leave}
-                                mainAction={() => deleteRoomMembership(room.id, user.id)}
-                                content={room.isAccepted ? "Leave Room" : "Cancel Join Request"}
-                                loadingContent={room.isAccepted ? "Leaving..." : "Cancelling..."}
-                            />
+                            <form action={deleteRoomMembership}>
+                                <input type="hidden" name="user_id" value={user.id} />
+                                <input type="hidden" name="room_id" value={room.id} />
+                                <SubmitButton
+                                    className={css.leave}
+                                    content={room.isAccepted ? "Leave Room" : "Cancel Join Request"}
+                                    loading={room.isAccepted ? "Leaving..." : "Cancelling..."}
+                                />
+                            </form>
                         ) : (
-                            <AsyncButton
-                                className={css.join}
-                                mainAction={() => createRoomMembership(room.id, user.id, room.public)}
-                                content="Join Room"
-                                loadingContent="Joining..."
-                            />
+                            <form action={handleCreateRoomMembership}>
+                                <input type="hidden" name="user_id" value={user.id} />
+                                <input type="hidden" name="room_id" value={room.id} />
+                                <SubmitButton className={css.join} content="Join Room" loading="Joining..." />
+                            </form>
                         ))}
                     <MembersContainer
                         members={room.members}

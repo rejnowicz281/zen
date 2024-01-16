@@ -1,7 +1,7 @@
 "use client";
 
 import { deleteMessage } from "@/actions/messages";
-import AsyncButton from "@/components/general/AsyncButton";
+import SubmitButton from "@/components/general/SubmitButton";
 import UserBox from "@/components/general/UserBox";
 import useAuthContext from "@/providers/AuthProvider";
 import useModalContext from "@/providers/ModalContext";
@@ -56,12 +56,14 @@ export default function MessagesList({ messages, isAdmin, isAccepted, roomIsPubl
                                 ) : (
                                     !message.deleted &&
                                     (isAdmin || message.user.id === user.id) && (
-                                        <AsyncButton
-                                            className={css.delete}
-                                            mainAction={() => deleteMessage(message.id)}
-                                            content="Delete Message"
-                                            loadingContent="Deleting..."
-                                        />
+                                        <form action={deleteMessage}>
+                                            <input type="hidden" name="id" value={message.id} />
+                                            <SubmitButton
+                                                className={css.delete}
+                                                content="Delete Message"
+                                                loading="Deleting..."
+                                            />
+                                        </form>
                                     )
                                 )}
                                 <div className={css.content}>

@@ -98,11 +98,17 @@ export async function createRoom(formData) {
     return actionSuccess("createRoom", { id: room[0].id, name });
 }
 
-export async function updateRoom(id, name, is_public) {
+export async function updateRoom(formData) {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
 
-    const updateData = { name, public: is_public };
+    const id = formData.get("id");
+    const name = formData.get("name");
+    const is_public = formData.get("public");
+
+    const updateData = {};
+    if (name) updateData.name = name;
+    if (is_public) updateData.public = is_public;
 
     const { data: room, error } = await supabase.from("rooms").update(updateData).eq("id", id);
 
@@ -111,9 +117,11 @@ export async function updateRoom(id, name, is_public) {
     return actionSuccess("updateRoom", updateData);
 }
 
-export async function deleteRoom(id) {
+export async function deleteRoom(formData) {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
+
+    const id = formData.get("id");
 
     const { data: room, error } = await supabase.from("rooms").delete().eq("id", id);
 
@@ -122,7 +130,7 @@ export async function deleteRoom(id) {
     return actionSuccess("deleteRoom", { id }, "/");
 }
 
-export async function createRoomMembership(room_id, user_id, room_is_public) {
+export async function createRoomMembership(formData) {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
 
@@ -130,18 +138,26 @@ export async function createRoomMembership(room_id, user_id, room_is_public) {
         data: { user },
     } = await supabase.auth.getUser();
 
+    const room_id = formData.get("room_id");
+    const user_id = formData.get("user_id");
+    const accepted = formData.get("accepted");
+
     const { data: membership, error } = await supabase
         .from("room_memberships")
-        .insert([{ user_id, room_id, accepted: room_is_public }]);
+        .insert([{ user_id, room_id, accepted }]);
 
     if (error) return actionError("createRoomMembership", { error });
 
-    return actionSuccess("createRoomMembership", { room_id, user_id });
+    return actionSuccess("createRoomMembership", { room_id, user_id, accepted });
 }
 
-export async function updateRoomMembership(room_id, user_id, accepted) {
+export async function updateRoomMembership(formData) {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
+
+    const room_id = formData.get("room_id");
+    const user_id = formData.get("user_id");
+    const accepted = formData.get("accepted");
 
     const { data: membership, error } = await supabase
         .from("room_memberships")
@@ -154,9 +170,12 @@ export async function updateRoomMembership(room_id, user_id, accepted) {
     return actionSuccess("updateRoomMembership", { room_id, user_id, accepted });
 }
 
-export async function deleteRoomMembership(room_id, user_id) {
+export async function deleteRoomMembership(formData) {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
+
+    const room_id = formData.get("room_id");
+    const user_id = formData.get("user_id");
 
     const { data: membership, error } = await supabase
         .from("room_memberships")

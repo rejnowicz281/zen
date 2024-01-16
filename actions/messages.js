@@ -35,9 +35,11 @@ export async function createMessage(formData) {
     return actionSuccess("createMessage", { text });
 }
 
-export async function deleteMessage(id) {
+export async function deleteMessage(formData) {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
+
+    const id = formData.get("id");
 
     const { data: message, error } = await supabase.from("messages").delete().eq("id", id);
 
