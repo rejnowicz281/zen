@@ -130,7 +130,7 @@ export async function deleteRoom(formData) {
     return actionSuccess("deleteRoom", { id }, "/");
 }
 
-export async function createRoomMembership(formData) {
+export async function createRoomMembership(formData, accepted) {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
 
@@ -140,7 +140,6 @@ export async function createRoomMembership(formData) {
 
     const room_id = formData.get("room_id");
     const user_id = formData.get("user_id");
-    const accepted = formData.get("accepted");
 
     const { data: membership, error } = await supabase
         .from("room_memberships")

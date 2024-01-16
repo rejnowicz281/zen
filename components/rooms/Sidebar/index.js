@@ -19,10 +19,8 @@ export default function Sidebar({ room }) {
         setSidebarOpen(!sidebarOpen);
     }
 
-    async function handleCreateRoomMembership(formData) {
-        formData.append("accepted", room.public);
-
-        await createRoomMembership(formData);
+    function handleCreateRoomMembership(formData) {
+        createRoomMembership(formData, room.public);
     }
 
     return (
