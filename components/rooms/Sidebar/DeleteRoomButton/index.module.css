@@ -4,6 +4,7 @@
     color: white;
     background-color: rgb(179, 115, 86);
     cursor: pointer;
+    font-weight: bold;
     transition: 0.1s;
     border-radius: 4px;
 }

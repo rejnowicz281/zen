@@ -12,6 +12,7 @@
 .accept,
 .reject {
     border: none;
+    font-weight: bold;
     width: 100%;
     padding: 10px 20px;
     cursor: pointer;

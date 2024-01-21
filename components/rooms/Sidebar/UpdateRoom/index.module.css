@@ -9,7 +9,7 @@
     color: whitesmoke;
     border: none;
     box-shadow: 0 0 1px grey;
-    font-weight: 500;
+    font-weight: bold;
     border-radius: 4px;
 }
 
@@ -26,6 +26,7 @@
 .make-public,
 .make-private {
     border: none;
+    font-weight: bold;
     width: 100%;
     padding: 10px 20px;
     cursor: pointer;

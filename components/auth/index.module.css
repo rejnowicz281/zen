@@ -19,7 +19,7 @@
 .form-field > label {
     display: block;
     color: rgb(210, 210, 210);
-    font-weight: 500;
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
@@ -48,7 +48,7 @@
     transition: 0.1s;
     background-color: #5d4fab;
     color: white;
-    font-weight: 500;
+    font-weight: bold;
     cursor: pointer;
     margin-bottom: 30px;
 }
@@ -71,7 +71,7 @@
 .auth-link-container > a {
     color: rgb(102, 132, 196);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: bold;
 }
 
 .auth-link-container > a:hover {
