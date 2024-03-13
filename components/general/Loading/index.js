@@ -1,4 +1,4 @@
-import { VscLoading } from "react-icons/vsc";
+import { VscLoading } from "@react-icons/all-files/vsc/VscLoading";
 import css from "./index.module.css";
 
 export default function Loading({ spinnerSize = "50px" }) {

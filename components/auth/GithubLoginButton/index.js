@@ -1,6 +1,6 @@
 import { githubSignIn } from "@/actions/auth";
 import SubmitButton from "@/components/general/SubmitButton";
-import { BsGithub } from "react-icons/bs";
+import { BsGithub } from "@react-icons/all-files/bs/BsGithub";
 import css from "./index.module.css";
 
 export default function GithubLoginButton() {

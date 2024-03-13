@@ -3,9 +3,9 @@
 import UserBox from "@/components/general/UserBox";
 import NavbarLogout from "@/components/navbars/NavbarLogout";
 import useAuthContext from "@/providers/AuthProvider";
+import { HiMiniBars3BottomLeft } from "@react-icons/all-files/hi2/HiMiniBars3BottomLeft";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { HiMiniBars3BottomLeft } from "react-icons/hi2";
 import css from "./index.module.css";
 
 export default function MainSidebar({ NavbarRooms, NavbarUsers }) {

@@ -3,8 +3,8 @@
 import { createMessage } from "@/actions/messages";
 import ImagePicker from "@/components/general/ImagePicker";
 import useAuthContext from "@/providers/AuthProvider";
+import { AiOutlineSend } from "@react-icons/all-files/ai/AiOutlineSend";
 import { useRef } from "react";
-import { AiOutlineSend } from "react-icons/ai";
 import css from "./index.module.css";
 
 export default function CreateMessage({ roomId, addOptimisticMessage }) {

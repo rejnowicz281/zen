@@ -3,8 +3,8 @@
 import { createRoomMembership, deleteRoomMembership } from "@/actions/rooms";
 import SubmitButton from "@/components/general/SubmitButton";
 import useAuthContext from "@/providers/AuthProvider";
+import { AiOutlineInfoCircle } from "@react-icons/all-files/ai/AiOutlineInfoCircle";
 import { useState } from "react";
-import { AiOutlineInfoCircle } from "react-icons/ai";
 import DeleteRoomButton from "./DeleteRoomButton";
 import MembersContainer from "./MembersContainer";
 import UpdateRoom from "./UpdateRoom";

@@ -6,8 +6,8 @@ import UserBox from "@/components/general/UserBox";
 import useAuthContext from "@/providers/AuthProvider";
 import useModalContext from "@/providers/ModalContext";
 import formatMessageDate from "@/utils/general/formatMessageDate";
+import { AiOutlineLoading } from "@react-icons/all-files/ai/AiOutlineLoading";
 import { useEffect, useRef } from "react";
-import { AiOutlineLoading } from "react-icons/ai";
 import ModalImage from "./ModalImage";
 import css from "./index.module.css";
 
